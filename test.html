@@ -1,0 +1,2723 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>HP Robotics Competition</title>
+
+<link rel="icon" type="image/png" href="Logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+    font-size:clamp(14px, 1.4vw + 8px, 17px);
+}
+
+body{
+    background:#020812;
+    color:#fff;
+    font-family:Arial,"Tahoma",sans-serif;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(0,140,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,140,255,.045) 1px,transparent 1px);
+    background-size:55px 55px;
+    pointer-events:none;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    right:-250px;
+    top:100px;
+    border-radius:50%;
+    background:#008cff;
+    filter:blur(180px);
+    opacity:.12;
+    pointer-events:none;
+    z-index:-1;
+}
+
+html::before{
+    content:"";
+    position:fixed;
+    width:520px;
+    height:520px;
+    left:-200px;
+    bottom:-160px;
+    border-radius:50%;
+    background:#149eff;
+    filter:blur(170px);
+    opacity:.10;
+    pointer-events:none;
+    z-index:-1;
+    animation:driftGlowB 20s ease-in-out infinite alternate;
+}
+
+html::after{
+    content:"";
+    position:fixed;
+    width:380px;
+    height:380px;
+    left:45%;
+    top:35%;
+    border-radius:50%;
+    background:#7f5cff;
+    filter:blur(160px);
+    opacity:.07;
+    pointer-events:none;
+    z-index:-1;
+    animation:driftGlowC 24s ease-in-out infinite alternate;
+}
+
+@keyframes driftGlowB{
+    0%{ transform:translate(0,0) scale(1); }
+    100%{ transform:translate(110px,-70px) scale(1.2); }
+}
+
+@keyframes driftGlowC{
+    0%{ transform:translate(-70px,-50px) scale(.85); opacity:.06; }
+    100%{ transform:translate(80px,60px) scale(1.15); opacity:.12; }
+}
+
+.scroll::before,
+.event::before,
+footer::before{
+    content:"";
+    position:fixed;
+    top:-5%;
+    width:2px;
+    height:2px;
+    background:#fff;
+    border-radius:50%;
+    box-shadow:0 0 6px 1px rgba(255,255,255,.9);
+    pointer-events:none;
+    z-index:5;
+    opacity:0;
+}
+
+.scroll::before{
+    left:15%;
+    animation:shootStar 5s linear infinite;
+    animation-delay:.5s;
+}
+
+.event::before{
+    left:55%;
+    animation:shootStar 6s linear infinite;
+    animation-delay:2s;
+}
+
+footer::before{
+    left:80%;
+    animation:shootStar 5.5s linear infinite;
+    animation-delay:3.5s;
+}
+
+@keyframes shootStar{
+    0%{
+        transform:translate(0,0) rotate(215deg);
+        opacity:0;
+    }
+    4%{
+        opacity:1;
+    }
+    20%{
+        transform:translate(-260px,260px) rotate(215deg);
+        opacity:0;
+    }
+    100%{
+        transform:translate(-260px,260px) rotate(215deg);
+        opacity:0;
+    }
+}
+
+/* NAVBAR */
+.navbar{
+    width:min(1200px,calc(100% - 50px));
+    height:clamp(70px, 8vw, 90px);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:clamp(8px, 1.5vw, 12px);
+    color:white;
+    text-decoration:none;
+}
+
+.logo-box{
+    width:clamp(40px, 6vw, 48px);
+    height:clamp(40px, 6vw, 48px);
+    aspect-ratio:1/1;
+    border:none;
+    border-radius:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:transparent;
+    flex-shrink:0;
+}
+
+.logo-box img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.logo-text strong{
+    display:block;
+    font-size:clamp(12px, 1.2vw + 8px, 15px);
+    letter-spacing:1px;
+    white-space:nowrap;
+}
+
+.logo-text span{
+    display:block;
+    color:#159eff;
+    font-size:clamp(8px, 0.6vw + 6px, 10px);
+    letter-spacing:2px;
+    margin-top:3px;
+    white-space:nowrap;
+}
+
+.desktop-menu{
+    display:flex;
+    gap:30px;
+}
+
+.desktop-menu a{
+    color:#91a8bf;
+    text-decoration:none;
+    transition:.25s;
+}
+
+.desktop-menu a:hover{
+    color:#fff;
+    text-shadow:0 0 15px #009cff;
+}
+
+.menu-button{
+    width:clamp(44px, 6vw, 52px);
+    height:clamp(44px, 6vw, 52px);
+    border:1px solid #128edc;
+    border-radius:10px;
+    background:rgba(0,90,170,.08);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    cursor:pointer;
+    flex-shrink:0;
+}
+
+.menu-button span{
+    width:27px;
+    height:3px;
+    background:#12a4ff;
+    border-radius:5px;
+    transition:.3s;
+}
+
+.menu-button.active span:nth-child(1){
+    transform:translateY(9px) rotate(45deg);
+}
+
+.menu-button.active span:nth-child(2){
+    opacity:0;
+}
+
+.menu-button.active span:nth-child(3){
+    transform:translateY(-9px) rotate(-45deg);
+}
+
+.mobile-menu{
+    display:none;
+    position:fixed;
+    z-index:100;
+    top:80px;
+    right:25px;
+    width:280px;
+    max-width:calc(100vw - 50px);
+    padding:12px;
+    border:1px solid #128edc;
+    border-radius:16px;
+    background:rgba(2,12,25,.96);
+    backdrop-filter:blur(20px);
+    box-shadow:0 20px 70px rgba(0,0,0,.6);
+}
+
+.mobile-menu.open{
+    display:block;
+}
+
+.mobile-menu a{
+    display:block;
+    padding:15px;
+    border-radius:10px;
+    color:#b5c9dc;
+    text-decoration:none;
+}
+
+.mobile-menu a:hover{
+    background:rgba(0,140,255,.12);
+    color:white;
+}
+
+/* HERO */
+.hero{
+    width:min(1200px,calc(100% - 50px));
+    min-height:610px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+}
+
+.hero-content{
+    z-index:2;
+}
+
+.small-title{
+    color:#63a5d2;
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:20px;
+}
+
+.small-title::before{
+    content:"";
+    display:inline-block;
+    width:35px;
+    height:2px;
+    background:#0d9cff;
+    margin-right:10px;
+    vertical-align:middle;
+}
+
+.hero h1{
+    font-size:clamp(43px,6vw,78px);
+    line-height:.92;
+    letter-spacing:-3px;
+}
+
+.hero h1 span{
+    color:transparent;
+    -webkit-text-stroke:1px #149eff;
+    text-shadow:0 0 30px rgba(0,150,255,.4);
+}
+
+.hero-thai{
+    position:relative;
+    font-size:clamp(19px, 2.3vw, 25px);
+    font-weight:600;
+    color:#e6eefa;
+    margin-top:34px;
+    padding-left:16px;
+}
+
+.hero-thai::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:3px;
+    bottom:3px;
+    width:3px;
+    border-radius:3px;
+    background:linear-gradient(180deg,#159eff,#7f5cff);
+}
+
+.school{
+    color:#5a9fd6;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:3px;
+    margin-top:7px;
+    padding-left:16px;
+}
+
+.description{
+    color:#8ca6bf;
+    max-width:460px;
+    line-height:1.85;
+    font-size:14.5px;
+    margin-top:34px;
+    padding-top:24px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.main-button{
+    margin-top:28px;
+    display:inline-flex;
+    align-items:center;
+    gap:30px;
+    padding:14px 18px 14px 23px;
+    color:white;
+    text-decoration:none;
+    border:1px solid #109dff;
+    border-radius:8px;
+    background:rgba(0,125,255,.12);
+    transition:.3s;
+}
+
+.main-button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 35px rgba(0,145,255,.35);
+}
+
+.main-button span{
+    color:#20aaff;
+    font-size:22px;
+}
+
+.robot-area{
+    height:clamp(340px, 46vw, 550px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.ring{
+    position:absolute;
+    border:1px solid rgba(0,145,255,.45);
+    border-radius:50%;
+    pointer-events:none;
+}
+
+.ring.one{
+    width:clamp(300px, 45vw, 470px);
+    height:clamp(300px, 45vw, 470px);
+    box-shadow:
+        0 0 50px rgba(0,130,255,.18),
+        inset 0 0 50px rgba(0,130,255,.08);
+}
+
+.ring.two{
+    width:clamp(230px, 34vw, 360px);
+    height:clamp(230px, 34vw, 360px);
+    border-style:dashed;
+    animation:rotate 25s linear infinite;
+}
+
+@keyframes rotate{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+.robot-placeholder{
+    width:clamp(320px, 46vw, 550px);
+    height:clamp(280px, 40vw, 470px);
+    position:relative;
+    z-index:5;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:none;
+    outline:none;
+    background:transparent;
+    overflow:visible;
+}
+
+.robot-placeholder img{
+    width:165%;
+    height:auto;
+
+    transform: translate(-6%, -6.5%);
+
+    max-width:none;
+    object-fit:contain;
+    display:block;
+
+    border:none;
+    outline:none;
+
+    filter:drop-shadow(
+        0 0 20px rgba(0,150,255,.35)
+    );
+
+    transition:.4s;
+}
+
+.scroll{
+    width:min(1200px,calc(100% - 50px));
+    margin:-10px auto 65px;
+    color:#5f7892;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.date-badge-wrap{
+    width:min(1200px,calc(100% - 50px));
+    margin:0 auto 18px;
+    display:flex;
+    justify-content:center;
+}
+
+.date-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:16px;
+    padding:10px 26px 10px 10px;
+    border-radius:999px;
+
+    border:1px solid rgba(21,158,255,.4);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(60,20,110,.55),
+            rgba(6,14,30,.85)
+        );
+    box-shadow:
+        0 0 30px rgba(120,80,255,.14),
+        inset 0 0 20px rgba(21,158,255,.06);
+    backdrop-filter:blur(10px);
+}
+
+.date-badge-icon{
+    width:46px;
+    height:46px;
+    flex-shrink:0;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,#159eff,#7f5cff);
+    box-shadow:0 0 18px rgba(21,158,255,.45);
+}
+
+.date-badge-icon svg{
+    width:22px;
+    height:22px;
+}
+
+.date-badge-text small{
+    display:block;
+    color:#7fb0e0;
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.date-badge-text strong{
+    display:block;
+    margin-top:3px;
+    font-size:17px;
+    font-weight:700;
+    letter-spacing:.2px;
+    color:#fff;
+}
+
+.deadline-badge-wrap{
+    width:min(1200px,calc(100% - 50px));
+    margin:0 auto 45px;
+    display:flex;
+    justify-content:center;
+}
+
+.deadline-badge{
+    display:inline-flex;
+    align-items:center;
+    padding:6px 20px;
+    border-radius:999px;
+
+    border:1px solid rgba(127,92,255,.35);
+    background:rgba(127,92,255,.08);
+
+    color:#c9b8ff;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.5px;
+}
+
+.countdown-wrap{
+    width:min(1200px,calc(100% - 50px));
+    margin:-20px auto 45px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.countdown-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-width:64px;
+    padding:12px 14px;
+    border-radius:14px;
+
+    border:1px solid rgba(21,158,255,.35);
+    background:
+        linear-gradient(
+            160deg,
+            rgba(21,158,255,.10),
+            rgba(6,14,30,.85)
+        );
+    box-shadow:
+        0 0 25px rgba(0,130,255,.10),
+        inset 0 0 15px rgba(21,158,255,.05);
+    backdrop-filter:blur(10px);
+}
+
+.countdown-value{
+    font-family:'Kanit', Arial, sans-serif;
+    font-size:clamp(22px, 3vw, 30px);
+    font-weight:800;
+    letter-spacing:.5px;
+    font-variant-numeric:tabular-nums;
+    background:linear-gradient(135deg,#67d1ff,#a68bff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.countdown-label{
+    margin-top:4px;
+    font-size:10px;
+    letter-spacing:1.5px;
+    color:#7fb0e0;
+}
+
+.countdown-sep{
+    color:#2f76ae;
+    font-size:20px;
+    font-weight:700;
+    transform:translateY(-8px);
+}
+
+.countdown-ended{
+    padding:10px 24px;
+    border-radius:999px;
+    border:1px solid rgba(255,70,70,.5);
+    background:rgba(255,40,40,.1);
+    color:#ffb3b3;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:1px;
+}
+
+@media(max-width:520px){
+    .countdown-sep{
+        display:none;
+    }
+
+    .countdown-box{
+        min-width:58px;
+        padding:10px 8px;
+    }
+}
+
+.cards{
+    width:min(1200px,calc(100% - 50px));
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.card{
+    min-height:230px;
+    position:relative;
+    text-align:left;
+    padding:32px 30px;
+    cursor:pointer;
+    color:white;
+    isolation:isolate;
+    overflow:hidden;
+
+    border:1px solid rgba(47,118,174,.35);
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            160deg,
+            rgba(10,32,54,.75),
+            rgba(2,10,20,.9)
+        );
+    backdrop-filter:blur(10px);
+
+    transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s, border-color .4s;
+    text-decoration:none;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    padding:1px;
+    background:linear-gradient(135deg,rgba(21,158,255,0) 15%,rgba(21,158,255,.9),rgba(127,92,255,.7) 85%);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    opacity:0;
+    transition:opacity .4s;
+    pointer-events:none;
+    z-index:1;
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    top:-40%;
+    left:-15%;
+    width:70%;
+    height:180%;
+    background:radial-gradient(circle,rgba(21,158,255,.18),transparent 70%);
+    opacity:0;
+    transition:opacity .5s;
+    pointer-events:none;
+    z-index:0;
+}
+
+.card:hover{
+    border-color:transparent;
+    box-shadow:0 20px 45px rgba(0,110,255,.16);
+    transform:translateY(-8px);
+    color:white;
+}
+
+.card:hover::before{ opacity:1; }
+.card:hover::after{ opacity:1; }
+
+.card.featured{
+    border-color:rgba(21,158,255,.55);
+    box-shadow:0 0 0 1px rgba(21,158,255,.15), 0 25px 50px rgba(0,120,255,.12);
+}
+
+.card.featured::before{ opacity:.55; }
+
+.card.featured::after{
+    content:"แนะนำ";
+    top:0;
+    left:0;
+    width:auto;
+    height:auto;
+    background:linear-gradient(135deg,#159eff,#7f5cff);
+    color:#fff;
+    font-size:10px;
+    letter-spacing:2px;
+    padding:6px 16px 6px 14px;
+    border-radius:0 0 14px 0;
+    opacity:1;
+}
+
+.card h2{
+    position:relative;
+    z-index:2;
+    font-size:24px;
+    font-weight:600;
+    letter-spacing:-.3px;
+}
+
+.card p{
+    position:relative;
+    z-index:2;
+    margin-top:6px;
+    color:#5c9bcf;
+    font-size:11px;
+    letter-spacing:2.5px;
+    font-weight:600;
+}
+
+.event{
+    width:min(1200px,calc(100% - 50px));
+    margin:120px auto 100px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:42px;
+}
+
+.section-title .line{
+    display:block;
+    width:55px;
+    height:2px;
+    margin:auto auto 15px;
+    background:#129cff;
+    box-shadow:0 0 15px #129cff;
+}
+
+.section-title small{
+    color:#4b8dbd;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-size:clamp(26px, 4vw, 38px);
+    margin-top:6px;
+}
+
+.event-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.event-box{
+    min-height:200px;
+    position:relative;
+    padding:34px;
+    text-align:center;
+    display:block;
+    color:inherit;
+    text-decoration:none;
+
+    border:1px solid rgba(35,119,181,.28);
+    border-radius:15px;
+
+    background:rgba(5,19,34,.65);
+    transition:.35s;
+}
+
+a.event-box{
+    cursor:pointer;
+}
+
+.event-box:hover{
+    border-color:rgba(21,158,255,.55);
+    box-shadow:0 15px 35px rgba(0,120,255,.12);
+    transform:translateY(-4px);
+}
+
+.event-box-total{
+    border-color:rgba(21,158,255,.5);
+    background:
+        linear-gradient(
+            160deg,
+            rgba(21,158,255,.10),
+            rgba(5,19,34,.7)
+        );
+}
+
+.stat-number{
+    font-size:clamp(38px, 5vw, 52px);
+    font-weight:700;
+    letter-spacing:-1px;
+    background:linear-gradient(135deg,#50c4ff,#7f5cff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.event-box h3{
+    color:#50b9ff;
+    font-size:16px;
+    margin-top:10px;
+}
+
+.event-box p{
+    color:#7f98b1;
+    line-height:1.7;
+    margin-top:7px;
+}
+
+.location{
+    width:min(1200px,calc(100% - 50px));
+    margin:auto;
+    padding-bottom:90px;
+}
+
+.location-box{
+    padding:clamp(35px, 5vw, 55px) clamp(16px, 3vw, 25px);
+    text-align:center;
+
+    border:1px solid #087dcc;
+    border-radius:20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,125,255,.12),
+            transparent 42%
+        ),
+        rgba(4,18,33,.8);
+
+    box-shadow:
+        inset 0 0 50px
+        rgba(0,130,255,.06);
+}
+
+.location small{
+    display:block;
+    margin-top:20px;
+    color:#4c91c0;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.location h2{
+    font-size:clamp(29px, 4.5vw, 40px);
+    margin-top:5px;
+}
+
+.location-en{
+    color:#20aaff;
+    font-size:13px;
+    letter-spacing:2px;
+}
+
+.location-line{
+    width:65px;
+    height:2px;
+    margin:20px auto;
+    background:#159eff;
+}
+
+.location-note{
+    color:#708ca6;
+}
+
+footer{
+    width:min(1200px,calc(100% - 50px));
+    margin:auto;
+    padding:28px 0 40px;
+
+    border-top:1px solid rgba(28,145,255,.18);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    color:#63809c;
+}
+
+footer strong{
+    color:#b6d0e8;
+    font-size:12px;
+}
+
+footer p{
+    margin-top:5px;
+    font-size:12px;
+}
+
+footer a{
+    color:#23a8ff;
+    text-decoration:none;
+}
+
+@media(max-width:850px){
+
+    .desktop-menu{
+        display:none;
+    }
+
+    .hero{
+        grid-template-columns:1fr;
+        padding-top:50px;
+        text-align:center;
+    }
+
+    .description{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-thai,
+    .school{
+        display:inline-block;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        min-height:100px;
+
+        display:grid;
+        grid-template-columns:1fr 40px;
+
+        align-items:center;
+        padding:20px;
+    }
+
+    .card-arrow{
+        position:static;
+    }
+
+    .event-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:520px){
+
+    .navbar,
+    .hero,
+    .scroll,
+    .cards,
+    .event,
+    .location,
+    footer{
+        width:calc(100% - 28px);
+    }
+
+    .hero{
+        padding-top:30px;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .description{
+        font-size:14px;
+    }
+
+    .event{
+        margin-top:90px;
+    }
+
+    .event-box{
+        min-height:200px;
+        padding:25px;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:18px;
+        text-align:center;
+    }
+}
+
+/* ============================================================
+   PRIZES
+   ============================================================ */
+
+.prizes{
+    width:min(1200px,calc(100% - 50px));
+    margin:0 auto 110px;
+}
+
+.prizes-grid{
+    display:grid;
+    grid-template-columns:1fr 1.12fr 1fr;
+    gap:22px;
+    align-items:end;
+}
+
+.prize-card{
+    position:relative;
+    border-radius:24px;
+    padding:36px 22px 30px;
+    text-align:center;
+    isolation:isolate;
+    overflow:hidden;
+    border:1px solid rgba(47,118,174,.32);
+    background:
+        linear-gradient(
+            165deg,
+            rgba(9,26,46,.85),
+            rgba(2,8,17,.95)
+        );
+    transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s, border-color .4s;
+}
+
+.prize-card:hover{
+    transform:translateY(-6px);
+}
+
+.prize-card.gold:hover{
+    transform:translateY(-24px) scale(1.045);
+}
+
+.prize-card::before{
+    content:"";
+    position:absolute;
+    top:-30%;
+    left:50%;
+    width:140%;
+    height:140%;
+    transform:translateX(-50%);
+    border-radius:50%;
+    filter:blur(50px);
+    opacity:.16;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.prize-card.gold{
+    order:2;
+    border-color:rgba(255,196,80,.45);
+    padding-top:44px;
+    padding-bottom:36px;
+    transform:translateY(-18px);
+    box-shadow:0 25px 60px rgba(255,170,50,.16), 0 0 0 1px rgba(255,196,80,.12);
+}
+
+.prize-card.gold::before{ background:#ffc850; }
+
+.prize-card.silver{
+    order:1;
+    border-color:rgba(190,210,230,.35);
+}
+
+.prize-card.silver::before{ background:#bcd3e8; }
+
+.prize-card.bronze{
+    order:3;
+    border-color:rgba(220,150,90,.4);
+}
+
+.prize-card.bronze::before{ background:#e0985a; }
+
+.prize-crown{
+    position:absolute;
+    top:14px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+    color:#ffd873;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.prize-crown svg{
+    width:13px;
+    height:13px;
+}
+
+.prize-medal{
+    width:64px;
+    height:64px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.prize-card.gold .prize-medal{
+    width:78px;
+    height:78px;
+    background:linear-gradient(135deg,#ffe29a,#ff9f4a);
+    box-shadow:0 10px 30px rgba(255,170,50,.4);
+}
+
+.prize-card.silver .prize-medal{
+    background:linear-gradient(135deg,#eef5fb,#93a9c2);
+    box-shadow:0 10px 26px rgba(150,180,210,.3);
+}
+
+.prize-card.bronze .prize-medal{
+    background:linear-gradient(135deg,#f0b17e,#b5652f);
+    box-shadow:0 10px 26px rgba(200,120,60,.3);
+}
+
+.prize-medal svg{
+    width:30px;
+    height:30px;
+    color:#1a1204;
+}
+
+.prize-card.gold .prize-medal svg{
+    width:36px;
+    height:36px;
+}
+
+.prize-rank{
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:#7fa9cf;
+}
+
+.prize-title{
+    font-family:'Kanit', Arial, sans-serif;
+    font-size:17px;
+    font-weight:700;
+    margin-top:6px;
+}
+
+.prize-card.gold .prize-title{
+    font-size:20px;
+    color:#ffe29a;
+}
+
+.prize-amount{
+    font-family:'Kanit', Arial, sans-serif;
+    font-weight:800;
+    margin-top:18px;
+    letter-spacing:.5px;
+    font-variant-numeric:tabular-nums;
+}
+
+.prize-amount .currency{
+    font-size:16px;
+    font-weight:600;
+    margin-right:3px;
+    vertical-align:middle;
+}
+
+.prize-amount .value{
+    font-size:34px;
+    vertical-align:middle;
+}
+
+.prize-card.gold .prize-amount .value{
+    font-size:44px;
+}
+
+.prize-card.gold .prize-amount{
+    background:linear-gradient(135deg,#ffe9b0,#ffb454);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.prize-card.silver .prize-amount{
+    background:linear-gradient(135deg,#f2f7fc,#b7c9dc);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.prize-card.bronze .prize-amount{
+    background:linear-gradient(135deg,#f3bd8c,#cf8148);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.prize-baht{
+    display:block;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    color:#5f7f9e;
+    margin-top:4px;
+}
+
+@media(max-width:850px){
+    .prizes-grid{
+        grid-template-columns:1fr;
+        align-items:stretch;
+    }
+
+    .prize-card.gold{
+        order:-1;
+        transform:none;
+    }
+
+    .prize-card.gold:hover{
+        transform:translateY(-6px);
+    }
+}
+
+@media(max-width:520px){
+    .prizes{
+        width:calc(100% - 28px);
+    }
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+
+.about{
+    width:min(1200px,calc(100% - 50px));
+    margin:10px auto 90px;
+}
+
+.about-card{
+    position:relative;
+    display:flex;
+    align-items:stretch;
+    margin-top:36px;
+    border-radius:28px;
+    overflow:hidden;
+    isolation:isolate;
+
+    background:
+        linear-gradient(165deg, rgba(9,26,46,.85), rgba(2,8,17,.95));
+    border:1px solid rgba(47,118,174,.35);
+    box-shadow:
+        0 30px 70px rgba(0,110,255,.18),
+        inset 0 0 40px rgba(0,130,255,.04);
+}
+
+.about-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    padding:1.5px;
+    background:linear-gradient(135deg,#159eff,#50c4ff,#7f5cff);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    opacity:.6;
+    pointer-events:none;
+    z-index:3;
+}
+
+.about-card-media{
+    position:relative;
+    flex:0 0 42%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:44px 24px;
+    overflow:hidden;
+    isolation:isolate;
+
+    background:radial-gradient(circle at 30% 25%, rgba(21,158,255,.18), transparent 62%);
+    border-right:1px solid rgba(255,255,255,.06);
+}
+
+.about-card-media .ring{
+    position:absolute;
+    border:1px solid rgba(0,145,255,.4);
+    border-radius:50%;
+    pointer-events:none;
+}
+
+.about-card-media .ring.one{
+    width:78%;
+    height:78%;
+    box-shadow:0 0 40px rgba(0,130,255,.15), inset 0 0 40px rgba(0,130,255,.08);
+}
+
+.about-card-media .ring.two{
+    width:56%;
+    height:56%;
+    border-style:dashed;
+    animation:rotate 25s linear infinite;
+}
+
+.about-card-media img{
+    position:relative;
+    z-index:2;
+    width:78%;
+    height:auto;
+    object-fit:contain;
+    filter:drop-shadow(0 22px 40px rgba(0,0,0,.5));
+    transition:transform .5s;
+}
+
+.about-card:hover .about-card-media img{
+    transform:scale(1.04) translateY(-4px);
+}
+
+.frame-corner{
+    position:absolute;
+    width:26px;
+    height:26px;
+    border-color:#50c4ff;
+    z-index:4;
+    opacity:.85;
+    pointer-events:none;
+}
+
+.frame-corner.tl{
+    top:16px;
+    left:16px;
+    border-top:2px solid;
+    border-left:2px solid;
+    border-radius:8px 0 0 0;
+}
+
+.frame-corner.br{
+    bottom:16px;
+    right:16px;
+    border-bottom:2px solid;
+    border-right:2px solid;
+    border-radius:0 0 8px 0;
+}
+
+.frame-tag{
+    position:absolute;
+    top:16px;
+    right:16px;
+    z-index:4;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:9.5px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    color:#7fc4ff;
+    padding:5px 11px;
+    border-radius:999px;
+    background:rgba(21,158,255,.12);
+    border:1px solid rgba(21,158,255,.35);
+    backdrop-filter:blur(6px);
+}
+
+.frame-tag::before{
+    content:"";
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#50c4ff;
+    box-shadow:0 0 8px #159eff;
+}
+
+.about-card-content{
+    position:relative;
+    z-index:2;
+    flex:1;
+    padding:40px 44px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    min-width:0;
+}
+
+.about-card-content p{
+    color:#a9c0d6;
+    font-size:14.5px;
+    line-height:1.9;
+    margin-bottom:14px;
+}
+
+.about-card-content p:last-of-type{
+    margin-bottom:0;
+}
+
+.about-stats{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:26px;
+}
+
+.about-stat{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    width:100%;
+    padding:15px 20px;
+    border-radius:14px;
+    background:rgba(21,158,255,.06);
+    border:1px solid rgba(21,158,255,.2);
+}
+
+.about-stat span{
+    order:1;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.3px;
+    color:#a9c0d6;
+}
+
+.about-stat strong{
+    order:2;
+    font-family:'Kanit', Arial, sans-serif;
+    font-size:19px;
+    font-weight:800;
+    text-align:right;
+    background:linear-gradient(135deg,#67d1ff,#a68bff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+@media(max-width:850px){
+    .about-card{
+        flex-direction:column;
+    }
+
+    .about-card-media{
+        flex:none;
+        width:100%;
+        padding:36px 20px;
+        border-right:none;
+        border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .about-card-media img{
+        width:52%;
+        max-width:220px;
+    }
+
+    .about-card-content{
+        padding:30px 26px 32px;
+    }
+}
+
+@media(max-width:520px){
+    .about{
+        width:calc(100% - 28px);
+    }
+
+    .about-card-content{
+        padding:26px 20px 28px;
+    }
+
+    .about-stats{
+        gap:10px;
+    }
+
+    .about-stat{
+        min-width:100px;
+        padding:14px 10px;
+    }
+}
+
+/* ============================================================
+   ANNOUNCEMENT — ช่องประชาสัมพันธ์เด่นสีแดง อยู่ใต้ช่องคำอธิบายการแข่งขัน
+   ============================================================ */
+
+.announcement{
+    width:min(1200px,calc(100% - 50px));
+    margin:0 auto 90px;
+}
+
+.announcement-box{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:26px 30px;
+    border-radius:20px;
+    isolation:isolate;
+    overflow:hidden;
+
+    border:1px solid rgba(255,70,70,.5);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(120,10,20,.55),
+            rgba(20,4,8,.9)
+        );
+    box-shadow:
+        0 20px 50px rgba(255,40,40,.15),
+        inset 0 0 30px rgba(255,60,60,.06);
+    animation:announcePulse 2.6s ease-in-out infinite;
+}
+
+@keyframes announcePulse{
+    0%,100%{
+        box-shadow:
+            0 20px 50px rgba(255,40,40,.15),
+            inset 0 0 30px rgba(255,60,60,.06);
+        border-color:rgba(255,70,70,.5);
+    }
+    50%{
+        box-shadow:
+            0 20px 60px rgba(255,40,40,.3),
+            inset 0 0 35px rgba(255,60,60,.12);
+        border-color:rgba(255,110,110,.8);
+    }
+}
+
+.announcement-icon{
+    width:56px;
+    height:56px;
+    flex-shrink:0;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,#ff4d4d,#b3001b);
+    box-shadow:0 0 22px rgba(255,60,60,.55);
+}
+
+.announcement-icon svg{
+    width:26px;
+    height:26px;
+    color:#fff;
+}
+
+.announcement-text{
+    flex:1;
+    min-width:0;
+}
+
+.announcement-tag{
+    display:inline-block;
+    color:#ffb3b3;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:2px;
+    margin-bottom:6px;
+}
+
+.announcement-text strong{
+    display:block;
+    font-size:17px;
+    font-weight:800;
+    color:#fff;
+    letter-spacing:.2px;
+}
+
+.announcement-text p{
+    margin-top:6px;
+    color:#f0c9c9;
+    font-size:13px;
+    line-height:1.7;
+}
+
+@media(max-width:600px){
+    .announcement{
+        width:calc(100% - 28px);
+    }
+
+    .announcement-box{
+        flex-direction:column;
+        text-align:center;
+        padding:26px 22px;
+    }
+}
+
+/* ============================================================
+   HELP REQUEST — ปุ่มขอความช่วยเหลือใต้ส่วนจำนวนผู้เข้าสมัคร
+   ============================================================ */
+
+.help{
+    width:min(1200px,calc(100% - 50px));
+    margin:0 auto 90px;
+    display:flex;
+    justify-content:center;
+}
+
+.help-box{
+    position:relative;
+    width:100%;
+    max-width:640px;
+    padding:34px clamp(20px,4vw,42px);
+    text-align:center;
+    border-radius:22px;
+    isolation:isolate;
+    overflow:hidden;
+
+    border:1px solid rgba(47,118,174,.32);
+    background:
+        linear-gradient(
+            165deg,
+            rgba(9,26,46,.85),
+            rgba(2,8,17,.95)
+        );
+    box-shadow:
+        0 25px 55px rgba(0,110,255,.12),
+        inset 0 0 30px rgba(0,130,255,.04);
+}
+
+.help-icon{
+    width:52px;
+    height:52px;
+    margin:0 auto 16px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,#159eff,#7f5cff);
+    box-shadow:0 0 20px rgba(21,158,255,.4);
+}
+
+.help-icon svg{
+    width:24px;
+    height:24px;
+    color:#fff;
+}
+
+.help-box h3{
+    font-size:19px;
+    font-weight:700;
+    color:#fff;
+}
+
+.help-box p{
+    margin-top:8px;
+    color:#8ca6bf;
+    font-size:13.5px;
+    line-height:1.7;
+}
+
+.help-toggle-btn{
+    margin-top:22px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:13px 26px;
+    border:1px solid #109dff;
+    border-radius:10px;
+    background:rgba(0,125,255,.12);
+    color:#fff;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    font-family:inherit;
+}
+
+.help-toggle-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 30px rgba(0,145,255,.3);
+}
+
+.help-toggle-btn svg{
+    width:17px;
+    height:17px;
+    color:#20aaff;
+}
+
+.help-form{
+    max-height:0;
+    opacity:0;
+    overflow:hidden;
+    margin-top:0;
+    transition:max-height .4s ease, opacity .3s ease, margin-top .4s ease;
+}
+
+.help-form.open{
+    max-height:320px;
+    opacity:1;
+    margin-top:24px;
+}
+
+.help-textarea{
+    width:100%;
+    min-height:110px;
+    padding:14px 16px;
+    resize:vertical;
+    border-radius:14px;
+    border:1px solid rgba(21,158,255,.3);
+    background:rgba(4,13,26,.75);
+    color:#fff;
+    font-family:Arial,"Tahoma",sans-serif;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.help-textarea::placeholder{
+    color:#5c7897;
+}
+
+.help-textarea:focus{
+    outline:none;
+    border-color:#159eff;
+    box-shadow:0 0 0 3px rgba(21,158,255,.15);
+}
+
+.help-submit-row{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:14px;
+    margin-top:14px;
+}
+
+.help-error{
+    font-size:12px;
+    color:#ff9b9b;
+    margin-right:auto;
+    display:none;
+}
+
+.help-submit-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 24px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(120deg,#159eff,#7f5cff);
+    color:#fff;
+    font-size:13.5px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:inherit;
+    transition:.3s;
+}
+
+.help-submit-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(0,120,255,.35);
+}
+
+.help-submit-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+    box-shadow:none;
+}
+
+.help-success{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    margin-top:24px;
+}
+
+.help-success.show{
+    display:flex;
+}
+
+.help-check{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#159eff,#7f5cff);
+    box-shadow:0 0 25px rgba(21,158,255,.5);
+    animation:helpCheckPop .4s cubic-bezier(.2,.9,.3,1.3);
+}
+
+.help-check svg{
+    width:28px;
+    height:28px;
+    color:#fff;
+}
+
+.help-check svg path{
+    stroke-dasharray:24;
+    stroke-dashoffset:24;
+    animation:helpCheckDraw .4s .15s ease forwards;
+}
+
+@keyframes helpCheckPop{
+    0%{ transform:scale(.6); opacity:0; }
+    100%{ transform:scale(1); opacity:1; }
+}
+
+@keyframes helpCheckDraw{
+    to{ stroke-dashoffset:0; }
+}
+
+.help-success p{
+    margin-top:14px;
+    color:#e3ecf7;
+    font-size:14px;
+    font-weight:600;
+}
+
+.help-success span{
+    display:block;
+    margin-top:4px;
+    color:#7f98b1;
+    font-size:12.5px;
+    font-weight:400;
+}
+
+@media(max-width:520px){
+    .help{
+        width:calc(100% - 28px);
+    }
+
+    .help-box{
+        padding:28px 20px;
+    }
+
+    .help-submit-row{
+        flex-wrap:wrap;
+    }
+
+    .help-error{
+        margin-right:0;
+        width:100%;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+    <a href="#home" class="logo">
+
+        <div class="logo-box">
+            <img src="logo.png" alt="Logo">
+        </div>
+
+        <div class="logo-text">
+            <strong>HP ROBOTICS</strong>
+            <span>COMPETITION</span>
+        </div>
+
+    </a>
+
+
+    <nav class="desktop-menu">
+
+        <a href="#home">หน้าแรก</a>
+
+        <a href="competition.html">
+            รายการแข่งขัน
+        </a>
+
+        <a href="participants.html">
+            ผู้เข้าแข่งขัน
+        </a>
+
+        <a href="Schedule.html">
+            กำหนดการ
+        </a>
+
+    </nav>
+
+
+    <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="เปิดเมนู"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+</header>
+
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+
+    <a href="#home">
+        หน้าแรก
+    </a>
+
+    <a href="competition.html">
+        รายการแข่งขัน
+    </a>
+
+    <a href="participants.html">
+        ผู้เข้าแข่งขัน
+    </a>
+
+    <a href="Schedule.html">
+        กำหนดการ
+    </a>
+
+</div>
+
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="small-title">
+            HP ROBOTICS EVENT
+        </div>
+
+        <h1>
+            ROBOTICS
+            <br>
+            <span>COMPETITION</span>
+        </h1>
+
+        <div class="hero-thai">
+            การแข่งขันหุ่นยนต์
+        </div>
+
+        <div class="school">
+            BY HORPHRA SCHOOL
+        </div>
+
+         <p class="description">
+
+
+        
+        </p>
+
+    
+    </div>
+
+
+    <!-- ROBOT -->
+    <div class="robot-area">
+
+        <div class="ring one"></div>
+
+        <div class="ring two"></div>
+
+        <div class="robot-placeholder">
+
+            <img
+                src="robot.png"
+                alt="HP Robotics Robot"
+            >
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+<section class="about" id="about">
+
+    <div class="section-title" style="text-align:left; margin-bottom:0;">
+
+        <span class="line" style="margin:0 0 15px 0;"></span>
+
+        <small>
+            ABOUT THE EVENT
+        </small>
+
+        <h2>
+            เกี่ยวกับการแข่งขัน
+        </h2>
+
+    </div>
+
+    <div class="about-card">
+
+        <div class="about-card-media">
+
+            <span class="frame-tag">ROBOT SHOWCASE</span>
+
+            <div class="ring one"></div>
+            <div class="ring two"></div>
+
+            <span class="frame-corner tl"></span>
+            <span class="frame-corner br"></span>
+
+            <img src="robot1.png" alt="หุ่นยนต์ตัวอย่าง HP Robotics Competition">
+
+        </div>
+
+        <div class="about-card-content">
+
+            <p>
+                HP Robotics Competition ครั้งที่1 คือเวทีการแข่งขันหุ่นยนต์ที่จัดขึ้นโดยโรงเรียนหอพระ จังหวัดเชียงใหม่
+                เปิดโอกาสให้นักเรียนได้แสดงความสามารถด้านการออกแบบ เขียนโปรแกรม และควบคุมหุ่นยนต์
+                ผ่านโจทย์การแข่งขัน 2 รูปแบบที่ท้าทายทั้งความเร็วและความแม่นยำ
+            </p>
+
+            <p>
+                งานนี้มุ่งส่งเสริมให้นักเรียนได้เรียนรู้กระบวนการคิดเชิงวิศวกรรม การแก้ปัญหาเฉพาะหน้า
+                และการทำงานเป็นทีม เปิดกว้างสำหรับทุกโรงเรียนที่สนใจเข้าร่วม 
+            </p>
+
+            <div class="about-stats">
+
+                <div class="about-stat">
+                    <span>รายการแข่งขัน</span>
+                    <strong>2</strong>
+                </div>
+
+                <div class="about-stat">
+                    <span>อายุไม่เกิน</span>
+                    <strong>13 ปี</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ANNOUNCEMENT -->
+<section class="announcement">
+
+    <div class="announcement-box">
+
+        <div class="announcement-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 11v2a2 2 0 0 0 2 2h1l4 4V5L6 9H5a2 2 0 0 0-2 2Z"/>
+                <path d="M15 9.5a3 3 0 0 1 0 5M18 6.5a7 7 0 0 1 0 11"/>
+            </svg>
+        </div>
+
+        <div class="announcement-text">
+            <span class="announcement-tag">ประกาศสำคัญ</span>
+            <strong>กรุณาอ่านรายระเอียดกติกาแล้วการสมัครให้ครบถ้วนก่อนตัดสินใจ
+                หากสมัครแล้วรายชื่อทีมไม่ขึ้นในจำนวนผู้เข้าสมัครทันทีเพราะทีมงานจะตรวจสอบข้อมูลภายใน 24 ชั่วโมง หากภายใน 24 ชั่วโมงรายชื่อของท่านยังไม่ขึ้นในจำนวนผู้สมัครแปลว่าข้อมูลไม่ครบหรือมีปัญหาโปรดสมัครอีกครั้ง
+        
+            </strong>
+            <p>
+                
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SCROLL -->
+<div class="scroll">
+
+    <span>↓</span>
+
+    <small>SCROLL</small>
+
+</div>
+
+
+<!-- DATE BADGE -->
+<div class="date-badge-wrap">
+
+    <div class="date-badge">
+
+        <div class="date-badge-icon">
+
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="5" width="18" height="16" rx="3" stroke="#fff" stroke-width="1.6"/>
+                <path d="M3 9.5H21" stroke="#fff" stroke-width="1.6"/>
+                <path d="M7.5 3V6.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M16.5 3V6.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                <rect x="6.5" y="12" width="3" height="3" rx="0.6" fill="#fff"/>
+            </svg>
+
+        </div>
+
+        <div class="date-badge-text">
+
+            <small>
+                วันแข่งขัน
+            </small>
+
+            <strong>
+               6 พฤศจิกายน 2569
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- DEADLINE BADGE -->
+<div class="deadline-badge-wrap">
+
+    <div class="deadline-badge">
+        ปิดรับสมัครถึง 1 พฤศจิกายน 2569
+    </div>
+
+</div>
+
+
+<!-- COUNTDOWN -->
+<div class="countdown-wrap" id="countdownWrap">
+
+    <div class="countdown-box">
+        <span class="countdown-value" id="cdDays">00</span>
+        <span class="countdown-label">วัน</span>
+    </div>
+
+    <span class="countdown-sep">:</span>
+
+    <div class="countdown-box">
+        <span class="countdown-value" id="cdHours">00</span>
+        <span class="countdown-label">ชั่วโมง</span>
+    </div>
+
+    <span class="countdown-sep">:</span>
+
+    <div class="countdown-box">
+        <span class="countdown-value" id="cdMinutes">00</span>
+        <span class="countdown-label">นาที</span>
+    </div>
+
+    <span class="countdown-sep">:</span>
+
+    <div class="countdown-box">
+        <span class="countdown-value" id="cdSeconds">00</span>
+        <span class="countdown-label">วินาที</span>
+    </div>
+
+</div>
+
+
+<!-- MAIN BUTTONS -->
+<section
+    class="cards"
+    id="competitions"
+>
+
+    <!-- COMPETITION -->
+    <a
+        href="competition.html"
+        class="card featured"
+    >
+
+        <div>
+
+            <h2>
+                รายการแข่งขัน
+            </h2>
+
+            <p>
+                COMPETITIONS
+            </p>
+
+        </div>
+
+        <div class="card-arrow">
+            
+        </div>
+
+    </a>
+
+
+    <!-- INVITATION -->
+    <a
+        href=""
+        class="card"
+    >
+
+        <div>
+
+            <h2>
+                หนังสือเชิญ
+            </h2>
+
+            <p>
+                INVITATION
+            </p>
+
+        </div>
+
+        <div class="card-arrow">
+            
+        </div>
+
+    </a>
+
+
+    <!-- SCHEDULE -->
+    <a
+        href="."
+        class="card"
+    >
+
+        <div>
+
+            <h2>
+                กำหนดการ ( เร็วๆนี้ )
+            </h2>
+
+            <p>
+                SCHEDULE
+            </p>
+
+        </div>
+
+        <div class="card-arrow">
+            
+        </div>
+
+    </a>
+
+</section>
+
+
+<!-- PRIZES -->
+<section class="prizes">
+
+    <div class="section-title">
+
+        <span class="line"></span>
+
+        <small>
+            TOP AWARDS
+        </small>
+
+        <h2>
+            รางวัลการแข่งขัน
+        </h2>
+
+    </div>
+
+    <div class="prizes-grid">
+
+        <!-- 1ST -->
+        <div class="prize-card gold">
+
+            <span class="prize-crown">
+                <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8Z"/>
+                </svg>
+                CHAMPION
+            </span>
+
+            <div class="prize-medal">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 21h8M12 17v4M17 4H7v6a5 5 0 0 0 10 0V4Z"/>
+                    <path d="M17 5h3a2 2 0 0 1-2 4M7 5H4a2 2 0 0 0 2 4"/>
+                </svg>
+            </div>
+
+            <div class="prize-rank">อันดับ 1</div>
+            <div class="prize-title">ชนะเลิศ</div>
+
+            <div class="prize-amount">
+                <span class="currency">฿</span><span class="value">1,500</span>
+            </div>
+            <span class="prize-baht">บาท</span>
+
+        </div>
+
+
+        <!-- 2ND -->
+        <div class="prize-card silver">
+
+            <div class="prize-medal">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="9" r="6"/>
+                    <path d="M9 14.5 7 22l5-3 5 3-2-7.5"/>
+                </svg>
+            </div>
+
+            <div class="prize-rank">อันดับ 2</div>
+            <div class="prize-title">รองชนะเลิศอันดับ 1</div>
+
+            <div class="prize-amount">
+                <span class="currency">฿</span><span class="value">1,000</span>
+            </div>
+            <span class="prize-baht">บาท</span>
+
+        </div>
+
+
+        <!-- 3RD -->
+        <div class="prize-card bronze">
+
+            <div class="prize-medal">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="9" r="6"/>
+                    <path d="M9 14.5 7 22l5-3 5 3-2-7.5"/>
+                </svg>
+            </div>
+
+            <div class="prize-rank">อันดับ 3</div>
+            <div class="prize-title">รองชนะเลิศอันดับ 2</div>
+
+            <div class="prize-amount">
+                <span class="currency">฿</span><span class="value">500</span>
+            </div>
+            <span class="prize-baht">บาท</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- EVENT -->
+<section class="event">
+
+    <div class="section-title">
+
+        <span class="line"></span>
+
+        <small>
+            REGISTRATION OVERVIEW
+        </small>
+
+        <h2>
+            จำนวนผู้เข้าสมัคร
+        </h2>
+
+    </div>
+
+
+    <div class="event-grid">
+
+
+        <a href="lisSoccer.html" class="event-box">
+
+            <div class="stat-number">
+                00
+            </div>
+
+            <h3>
+               Robot Soccer Championship
+            </h3>
+            
+            </p>
+
+        </a>
+
+
+        <a href="lisRecycling.html" class="event-box">
+
+            <div class="stat-number">
+                00
+            </div>
+
+            <h3>
+                Recycling Mission Challenge
+            </h3>
+
+            
+            </p>
+
+        </a>
+
+
+        <div class="event-box event-box-total">
+
+            <div class="stat-number">
+                00
+            </div>
+
+            <h3>
+                ALL
+            </h3>
+
+           
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HELP REQUEST -->
+<section class="help">
+
+    <div class="help-box">
+
+        <div class="help-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M9.5 9a2.5 2.5 0 0 1 4.8 1c0 1.5-2.3 1.8-2.3 3.5"/>
+                <circle cx="12" cy="16.5" r=".6" fill="currentColor"/>
+            </svg>
+        </div>
+
+        <h3>พบปัญหาหรือมีข้อสงสัย?</h3>
+
+        <p>
+            แจ้งปัญหาหรือขอความช่วยเหลือเกี่ยวกับการสมัครหรือการแข่งขันได้ที่นี่
+        </p>
+
+        <button type="button" class="help-toggle-btn" id="helpToggleBtn">
+
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            </svg>
+
+            ขอความช่วยเหลือ
+
+        </button>
+
+        <form class="help-form" id="helpForm" novalidate>
+
+            <textarea
+                class="help-textarea"
+                id="helpMessage"
+                placeholder="พิมพ์ปัญหาหรือข้อความที่ต้องการแจ้งทีมงาน..."
+            ></textarea>
+
+            <div class="help-submit-row">
+
+                <span class="help-error" id="helpError">กรุณาพิมพ์ข้อความก่อนส่ง</span>
+
+                <button type="submit" class="help-submit-btn" id="helpSubmitBtn">
+                    ส่งข้อความ
+                </button>
+
+            </div>
+
+        </form>
+
+        <div class="help-success" id="helpSuccess">
+
+            <div class="help-check">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 13l4 4L19 7"/>
+                </svg>
+            </div>
+
+            <p>
+                ส่งข้อความเรียบร้อยแล้ว
+                <span>ทางเราจะแก้ไขให้เร็วที่สุด</span>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LOCATION -->
+<section class="location">
+
+    <div class="location-box">
+
+        <small>
+            EVENT LOCATION
+        </small>
+
+        <h2>
+            ณ โรงเรียนหอพระ
+        </h2>
+
+        <div class="location-en">
+            HORPHRA SCHOOL
+        </div>
+
+        <div class="location-line"></div>
+
+        <p class="location-note">
+            หอประชุม พันแจ่ม จังหวัดเชียงใหม่ 
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div>
+
+        <strong>
+            HP ROBOTICS COMPETITION
+        </strong>
+
+        <p>
+            © 2026 Horpra School.
+            All rights reserved.
+        </p>
+
+    </div>
+
+    <a href="#home">
+        กลับด้านบน ↑
+    </a>
+
+</footer>
+
+
+<script>
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+
+menuButton.addEventListener(
+    "click",
+    function(){
+
+        mobileMenu.classList.toggle("open");
+
+        menuButton.classList.toggle("active");
+
+    }
+);
+
+
+document
+    .querySelectorAll(".mobile-menu a")
+    .forEach(function(link){
+
+        link.addEventListener(
+            "click",
+            function(){
+
+                mobileMenu.classList.remove("open");
+
+                menuButton.classList.remove("active");
+
+            }
+        );
+
+    });
+
+
+/* COUNTDOWN — นับถอยหลังถึงวันปิดรับสมัคร 1 พฤศจิกายน 2569 (23:59:59 เวลาไทย) */
+
+const countdownTarget =
+    new Date("2026-11-01T23:59:59+07:00").getTime();
+
+const countdownWrap =
+    document.getElementById("countdownWrap");
+
+let countdownInterval;
+
+
+function updateCountdown(){
+
+    const now = new Date().getTime();
+    const diff = countdownTarget - now;
+
+    if(diff <= 0){
+
+        countdownWrap.innerHTML =
+            '<div class="countdown-ended">ปิดรับสมัครแล้ว</div>';
+
+        clearInterval(countdownInterval);
+
+        return;
+
+    }
+
+    const days =
+        Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    const hours =
+        Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    const minutes =
+        Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+    const seconds =
+        Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById("cdDays").textContent =
+        String(days).padStart(2, "0");
+
+    document.getElementById("cdHours").textContent =
+        String(hours).padStart(2, "0");
+
+    document.getElementById("cdMinutes").textContent =
+        String(minutes).padStart(2, "0");
+
+    document.getElementById("cdSeconds").textContent =
+        String(seconds).padStart(2, "0");
+
+}
+
+
+updateCountdown();
+
+countdownInterval = setInterval(updateCountdown, 1000);
+
+
+/* HELP REQUEST — เปิด/ปิดฟอร์ม และส่งข้อความไปเก็บที่ Supabase */
+
+/* TODO: ใส่ Supabase anon public key ของโปรเจกต์ (หาได้ที่ Project Settings > API) */
+const SUPABASE_URL = "https://keckrebnpvcromotopzw.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_vOulAP5DW2kk7Ldl2TI-cg_lH9Mya_8";
+const SUPABASE_TABLE = "help_requests";
+
+const helpToggleBtn = document.getElementById("helpToggleBtn");
+const helpForm = document.getElementById("helpForm");
+const helpMessage = document.getElementById("helpMessage");
+const helpError = document.getElementById("helpError");
+const helpSubmitBtn = document.getElementById("helpSubmitBtn");
+const helpSuccess = document.getElementById("helpSuccess");
+
+
+helpToggleBtn.addEventListener("click", function(){
+
+    const isOpen = helpForm.classList.toggle("open");
+
+    helpSuccess.classList.remove("show");
+
+    if(isOpen){
+        helpMessage.focus();
+    }
+
+});
+
+
+helpForm.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const message = helpMessage.value.trim();
+
+    if(message === ""){
+        helpError.style.display = "inline";
+        return;
+    }
+
+    helpError.style.display = "none";
+    helpSubmitBtn.disabled = true;
+    helpSubmitBtn.textContent = "กำลังส่ง...";
+
+    try{
+
+        const response = await fetch(
+            SUPABASE_URL + "/rest/v1/" + SUPABASE_TABLE,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+                    "Prefer": "return=minimal"
+                },
+                body: JSON.stringify({ message: message })
+            }
+        );
+
+        if(!response.ok){
+            throw new Error("ส่งไม่สำเร็จ");
+        }
+
+        helpForm.classList.remove("open");
+        helpMessage.value = "";
+        helpSuccess.classList.add("show");
+
+    }catch(err){
+
+        helpError.textContent = "ส่งข้อความไม่สำเร็จ กรุณาลองใหม่อีกครั้ง";
+        helpError.style.display = "inline";
+
+    }finally{
+
+        helpSubmitBtn.disabled = false;
+        helpSubmitBtn.textContent = "ส่งข้อความ";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

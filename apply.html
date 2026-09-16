@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>สมัครเข้าแข่งขัน - HP Robotics Competition</title>
+
+<link rel="icon" type="image/png" href="Logo.png">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+    font-size:clamp(14px, 1.4vw + 8px, 17px);
+}
+
+body{
+    background:#020812;
+    color:#fff;
+    font-family:Arial,"Tahoma",sans-serif;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(0,140,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,140,255,.045) 1px,transparent 1px);
+    background-size:55px 55px;
+    pointer-events:none;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    right:-250px;
+    top:100px;
+    border-radius:50%;
+    background:#008cff;
+    filter:blur(180px);
+    opacity:.12;
+    pointer-events:none;
+    z-index:-1;
+}
+
+html::before{
+    content:"";
+    position:fixed;
+    width:520px;
+    height:520px;
+    left:-200px;
+    bottom:-160px;
+    border-radius:50%;
+    background:#149eff;
+    filter:blur(170px);
+    opacity:.10;
+    pointer-events:none;
+    z-index:-1;
+    animation:driftGlowB 20s ease-in-out infinite alternate;
+}
+
+html::after{
+    content:"";
+    position:fixed;
+    width:380px;
+    height:380px;
+    left:45%;
+    top:35%;
+    border-radius:50%;
+    background:#7f5cff;
+    filter:blur(160px);
+    opacity:.07;
+    pointer-events:none;
+    z-index:-1;
+    animation:driftGlowC 24s ease-in-out infinite alternate;
+}
+
+@keyframes driftGlowB{
+    0%{ transform:translate(0,0) scale(1); }
+    100%{ transform:translate(110px,-70px) scale(1.2); }
+}
+
+@keyframes driftGlowC{
+    0%{ transform:translate(-70px,-50px) scale(.85); opacity:.06; }
+    100%{ transform:translate(80px,60px) scale(1.15); opacity:.12; }
+}
+
+/* NAVBAR */
+.navbar{
+    width:min(1200px,calc(100% - 50px));
+    height:clamp(70px, 8vw, 90px);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:clamp(8px, 1.5vw, 12px);
+    color:white;
+    text-decoration:none;
+}
+
+.logo-box{
+    width:clamp(40px, 6vw, 48px);
+    height:clamp(40px, 6vw, 48px);
+    aspect-ratio:1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:transparent;
+    flex-shrink:0;
+}
+
+.logo-box img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.logo-text strong{
+    display:block;
+    font-size:clamp(12px, 1.2vw + 8px, 15px);
+    letter-spacing:1px;
+    white-space:nowrap;
+}
+
+.logo-text span{
+    display:block;
+    color:#159eff;
+    font-size:clamp(8px, 0.6vw + 6px, 10px);
+    letter-spacing:2px;
+    margin-top:3px;
+    white-space:nowrap;
+}
+
+.desktop-menu{
+    display:flex;
+    gap:30px;
+}
+
+.desktop-menu a{
+    color:#91a8bf;
+    text-decoration:none;
+    transition:.25s;
+}
+
+.desktop-menu a:hover{
+    color:#fff;
+    text-shadow:0 0 15px #009cff;
+}
+
+.menu-button{
+    width:clamp(44px, 6vw, 52px);
+    height:clamp(44px, 6vw, 52px);
+    border:1px solid #128edc;
+    border-radius:10px;
+    background:rgba(0,90,170,.08);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    cursor:pointer;
+    flex-shrink:0;
+}
+
+.menu-button span{
+    width:27px;
+    height:3px;
+    background:#12a4ff;
+    border-radius:5px;
+    transition:.3s;
+}
+
+.menu-button.active span:nth-child(1){ transform:translateY(9px) rotate(45deg); }
+.menu-button.active span:nth-child(2){ opacity:0; }
+.menu-button.active span:nth-child(3){ transform:translateY(-9px) rotate(-45deg); }
+
+.mobile-menu{
+    display:none;
+    position:fixed;
+    z-index:100;
+    top:80px;
+    right:25px;
+    width:280px;
+    max-width:calc(100vw - 50px);
+    padding:12px;
+    border:1px solid #128edc;
+    border-radius:16px;
+    background:rgba(2,12,25,.96);
+    backdrop-filter:blur(20px);
+    box-shadow:0 20px 70px rgba(0,0,0,.6);
+}
+
+.mobile-menu.open{ display:block; }
+
+.mobile-menu a{
+    display:block;
+    padding:15px;
+    border-radius:10px;
+    color:#b5c9dc;
+    text-decoration:none;
+}
+
+.mobile-menu a:hover{
+    background:rgba(0,140,255,.12);
+    color:white;
+}
+
+.section-title{
+    text-align:left;
+    margin-bottom:0;
+}
+
+.section-title .line{
+    display:block;
+    width:55px;
+    height:2px;
+    margin:0 0 15px 0;
+    background:#129cff;
+    box-shadow:0 0 15px #129cff;
+}
+
+.section-title small{
+    color:#4b8dbd;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-size:clamp(26px, 4vw, 38px);
+    margin-top:6px;
+}
+
+footer{
+    width:min(1200px,calc(100% - 50px));
+    margin:auto;
+    padding:28px 0 40px;
+    border-top:1px solid rgba(28,145,255,.18);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#63809c;
+}
+
+footer strong{ color:#b6d0e8; font-size:12px; }
+footer p{ margin-top:5px; font-size:12px; }
+footer a{ color:#23a8ff; text-decoration:none; }
+
+@media(max-width:850px){
+    .desktop-menu{ display:none; }
+}
+
+@media(max-width:520px){
+    .navbar, footer{ width:calc(100% - 28px); }
+}
+
+
+/* ===== REGISTER PAGE ===== */
+
+.page-header{
+    width:min(1200px,calc(100% - 50px));
+    margin:60px auto 12px;
+}
+
+.page-sub{
+    color:#8ca6bf;
+    font-size:13.5px;
+    margin-top:14px;
+    max-width:560px;
+    line-height:1.7;
+}
+
+.form-wrap{
+    width:min(760px,calc(100% - 50px));
+    margin:40px auto 110px;
+}
+
+.form-card{
+    border-radius:24px;
+    border:1px solid rgba(47,118,174,.32);
+    background:
+        linear-gradient(
+            165deg,
+            rgba(9,26,46,.85),
+            rgba(2,8,17,.95)
+        );
+    backdrop-filter:blur(10px);
+    padding:clamp(24px, 4vw, 44px);
+}
+
+.field-group{
+    margin-bottom:26px;
+}
+
+.field-label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.2px;
+    color:#dce8f5;
+    margin-bottom:10px;
+}
+
+.field-label .required{
+    color:#ff5c7a;
+    font-size:13px;
+}
+
+.field-hint{
+    display:block;
+    font-size:11px;
+    font-weight:500;
+    color:#5f7f9e;
+    margin-top:6px;
+}
+
+.field-error{
+    display:none;
+    font-size:11.5px;
+    font-weight:600;
+    color:#ff6b81;
+    margin-top:7px;
+    align-items:center;
+    gap:6px;
+}
+
+.field-error.show{
+    display:flex;
+}
+
+.field-error svg{
+    width:13px;
+    height:13px;
+    flex-shrink:0;
+}
+
+/* text / email / tel / number inputs */
+.text-input{
+    width:100%;
+    padding:14px 18px;
+    border-radius:12px;
+    border:1px solid rgba(47,118,174,.4);
+    background:rgba(6,18,34,.75);
+    color:#fff;
+    font-size:14px;
+    font-family:inherit;
+    outline:none;
+    transition:.25s;
+}
+
+.text-input::placeholder{
+    color:#5a7b9c;
+}
+
+.text-input:focus{
+    border-color:rgba(21,158,255,.75);
+    box-shadow:0 0 0 4px rgba(21,158,255,.12);
+}
+
+.field-group.invalid .text-input{
+    border-color:rgba(255,90,120,.75);
+    box-shadow:0 0 0 4px rgba(255,90,120,.1);
+}
+
+.field-group.invalid .upload-box{
+    border-color:rgba(255,90,120,.75);
+}
+
+.field-group.invalid .choice-card{
+    border-color:rgba(255,90,120,.6);
+}
+
+/* ===== PAYMENT INFO CARD =====
+   ช่องข้อมูลบัญชีโอนเงิน — เด่นสุดในฟอร์ม อยู่บนสุดก่อนเลือกรายการแข่งขัน
+   ใช้กรอบไล่สีเรืองแสงเหมือนปุ่ม CTA หลักของเว็บ ให้สายตาเห็นก่อนอันดับแรก */
+.payment-info{
+    position:relative;
+    margin-bottom:30px;
+    padding:2px;
+    border-radius:20px;
+    background:linear-gradient(120deg,#159eff,#7f5cff);
+}
+
+.payment-info-inner{
+    border-radius:18px;
+    padding:22px 24px;
+    background:
+        linear-gradient(
+            165deg,
+            rgba(9,26,46,.96),
+            rgba(2,8,17,.98)
+        );
+}
+
+.payment-info-head{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.payment-info-icon{
+    width:40px;
+    height:40px;
+    flex-shrink:0;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#159eff,#7f5cff);
+    box-shadow:0 0 18px rgba(21,158,255,.4);
+}
+
+.payment-info-icon svg{
+    width:19px;
+    height:19px;
+    color:#fff;
+}
+
+.payment-info-head strong{
+    display:block;
+    font-size:14.5px;
+    font-weight:800;
+    color:#fff;
+}
+
+.payment-info-head span{
+    display:block;
+    font-size:11px;
+    color:#7fb0e0;
+    letter-spacing:.5px;
+    margin-top:2px;
+}
+
+.payment-info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.payment-info-row{
+    padding:14px 16px;
+    border-radius:12px;
+    background:rgba(21,158,255,.06);
+    border:1px solid rgba(21,158,255,.2);
+}
+
+.payment-info-row.full{
+    grid-column:1 / -1;
+}
+
+.payment-info-row .label{
+    display:block;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:#5f7f9e;
+    margin-bottom:6px;
+}
+
+.payment-info-row .value{
+    display:block;
+    font-size:15px;
+    font-weight:700;
+    color:#dce8f5;
+}
+
+.payment-info-row .value.account-number{
+    font-size:19px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    background:linear-gradient(135deg,#50c4ff,#c9b8ff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.payment-info-note{
+    margin-top:14px;
+    font-size:11.5px;
+    color:#5f7f9e;
+    line-height:1.6;
+}
+
+@media(max-width:600px){
+    .payment-info-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* ===== TYPE TOGGLE (เดี่ยว/คู่) ===== */
+.type-toggle{
+    display:flex;
+    gap:12px;
+}
+
+.type-tab{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    padding:15px 12px;
+    border-radius:14px;
+    border:1px solid rgba(47,118,174,.35);
+    background:rgba(5,16,30,.7);
+    color:#93aec7;
+    font-family:inherit;
+    font-size:13.5px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.type-tab svg{
+    width:17px;
+    height:17px;
+    flex-shrink:0;
+}
+
+.type-tab:hover{
+    border-color:rgba(21,158,255,.55);
+}
+
+.type-tab:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+    pointer-events:none;
+}
+
+.type-tab:disabled:hover{
+    border-color:rgba(47,118,174,.35);
+}
+
+.type-tab.active{
+    border-color:rgba(21,158,255,.75);
+    background:linear-gradient(120deg, rgba(21,158,255,.16), rgba(127,92,255,.08));
+    color:#fff;
+    box-shadow:0 10px 24px rgba(0,110,255,.15);
+}
+
+/* กล่องแยกผู้เข้าแข่งขันแต่ละคนตอนเลือก "คู่" */
+.team-member-block{
+    padding:18px;
+    border-radius:16px;
+    background:rgba(255,255,255,.02);
+    border:1px solid rgba(255,255,255,.07);
+    margin-bottom:26px;
+}
+
+.team-member-block .field-group:last-child{
+    margin-bottom:0;
+}
+
+.team-member-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:#7fc4ff;
+    margin-bottom:16px;
+}
+
+.team-member-label::before{
+    content:"";
+    width:16px;
+    height:2px;
+    border-radius:2px;
+    background:linear-gradient(90deg,#159eff,#7f5cff);
+    flex-shrink:0;
+}
+
+/* COMPETITION CHOICE CARDS */
+.choice-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.choice-card{
+    position:relative;
+    cursor:pointer;
+    display:block;
+}
+
+.choice-card input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+}
+
+.choice-card-body{
+    padding:20px 18px;
+    border-radius:16px;
+    border:1px solid rgba(47,118,174,.35);
+    background:rgba(5,16,30,.7);
+    transition:.25s;
+    text-align:center;
+}
+
+.choice-card-icon{
+    width:38px;
+    height:38px;
+    margin:0 auto 12px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(21,158,255,.1);
+    border:1px solid rgba(21,158,255,.3);
+    transition:.25s;
+}
+
+.choice-card-icon svg{
+    width:18px;
+    height:18px;
+    color:#7fc4ff;
+}
+
+.choice-card-body strong{
+    display:block;
+    font-size:13.5px;
+    font-weight:700;
+}
+
+.choice-card-body span{
+    display:block;
+    font-size:10px;
+    color:#5f7f9e;
+    letter-spacing:1px;
+    margin-top:4px;
+}
+
+.choice-card input:checked + .choice-card-body{
+    border-color:rgba(21,158,255,.75);
+    background:linear-gradient(160deg, rgba(21,158,255,.14), rgba(127,92,255,.06));
+    box-shadow:0 0 0 3px rgba(21,158,255,.12), 0 15px 30px rgba(0,110,255,.15);
+}
+
+.choice-card input:checked + .choice-card-body .choice-card-icon{
+    background:linear-gradient(135deg,#159eff,#7f5cff);
+    border-color:transparent;
+}
+
+.choice-card input:checked + .choice-card-body .choice-card-icon svg{
+    color:#fff;
+}
+
+.choice-card-body:hover{
+    border-color:rgba(21,158,255,.55);
+}
+
+/* two-up grid for shorter fields */
+.field-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+/* FILE UPLOAD */
+.upload-box{
+    display:block;
+    position:relative;
+    border:1.5px dashed rgba(47,118,174,.5);
+    border-radius:16px;
+    padding:26px 18px;
+    text-align:center;
+    cursor:pointer;
+    transition:.25s;
+    background:rgba(5,16,30,.5);
+}
+
+.upload-box:hover{
+    border-color:rgba(21,158,255,.7);
+    background:rgba(21,158,255,.05);
+}
+
+.upload-box input[type="file"]{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    cursor:pointer;
+}
+
+.upload-icon{
+    width:42px;
+    height:42px;
+    margin:0 auto 12px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(21,158,255,.1);
+    border:1px solid rgba(21,158,255,.3);
+}
+
+.upload-icon svg{
+    width:20px;
+    height:20px;
+    color:#7fc4ff;
+}
+
+.upload-text strong{
+    display:block;
+    font-size:13px;
+    color:#dce8f5;
+}
+
+.upload-text span{
+    display:block;
+    font-size:11px;
+    color:#5f7f9e;
+    margin-top:4px;
+}
+
+.upload-preview{
+    display:none;
+    margin-top:16px;
+    align-items:center;
+    gap:12px;
+    padding:10px 14px;
+    border-radius:12px;
+    background:rgba(21,158,255,.08);
+    border:1px solid rgba(21,158,255,.25);
+    text-align:left;
+}
+
+.upload-preview.show{
+    display:flex;
+}
+
+.upload-preview img{
+    width:44px;
+    height:44px;
+    object-fit:cover;
+    border-radius:8px;
+    flex-shrink:0;
+}
+
+.upload-preview-name{
+    font-size:12px;
+    color:#dce8f5;
+    font-weight:600;
+    word-break:break-all;
+}
+
+.upload-preview-remove{
+    margin-left:auto;
+    background:none;
+    border:none;
+    color:#ff6b81;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+    flex-shrink:0;
+}
+
+/* SUBMIT BUTTON — โทนเดียวกับ register-cta หน้ารายการแข่งขัน */
+.submit-btn{
+    position:relative;
+    width:100%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    padding:18px 24px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.18);
+    background:linear-gradient(120deg,#159eff,#7f5cff);
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:.3px;
+    cursor:pointer;
+    overflow:hidden;
+    isolation:isolate;
+    box-shadow:0 12px 30px rgba(0,120,255,.3);
+    transition:transform .25s, box-shadow .25s;
+    font-family:inherit;
+    margin-top:8px;
+}
+
+.submit-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 18px 38px rgba(0,120,255,.4);
+}
+
+.submit-btn:active{
+    transform:translateY(0);
+}
+
+.submit-btn:disabled{
+    opacity:.7;
+    cursor:not-allowed;
+    transform:none !important;
+}
+
+.submit-btn svg{
+    width:18px;
+    height:18px;
+    position:relative;
+    z-index:2;
+}
+
+.submit-btn .spinner{
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.35);
+    border-top-color:#fff;
+    animation:spin .7s linear infinite;
+}
+
+@keyframes spin{
+    to{ transform:rotate(360deg); }
+}
+
+.submit-note{
+    text-align:center;
+    font-size:11px;
+    color:#5f7f9e;
+    margin-top:14px;
+}
+
+.form-submit-error{
+    display:none;
+    align-items:center;
+    gap:8px;
+    justify-content:center;
+    text-align:center;
+    font-size:12.5px;
+    font-weight:600;
+    color:#ff6b81;
+    background:rgba(255,90,120,.08);
+    border:1px solid rgba(255,90,120,.3);
+    border-radius:12px;
+    padding:12px 16px;
+    margin-top:8px;
+}
+
+.form-submit-error.show{
+    display:flex;
+}
+
+.form-submit-error svg{
+    width:15px;
+    height:15px;
+    flex-shrink:0;
+}
+
+/* ===== SUCCESS STATE ===== */
+.form-card.hidden{
+    display:none;
+}
+
+.success-card{
+    display:none;
+    text-align:center;
+    padding:clamp(32px, 5vw, 56px) clamp(20px, 4vw, 40px);
+}
+
+.success-card.show{
+    display:block;
+}
+
+.success-icon{
+    width:70px;
+    height:70px;
+    margin:0 auto 22px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#159eff,#7f5cff);
+    box-shadow:0 0 40px rgba(21,158,255,.4);
+}
+
+.success-icon svg{
+    width:32px;
+    height:32px;
+    color:#fff;
+}
+
+.success-card h3{
+    font-size:22px;
+    font-weight:800;
+}
+
+.success-card p{
+    color:#8ca6bf;
+    font-size:13.5px;
+    margin-top:10px;
+    line-height:1.7;
+}
+
+.code-box{
+    margin:28px auto 8px;
+    max-width:340px;
+    padding:22px;
+    border-radius:18px;
+    border:1px solid rgba(21,158,255,.4);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(60,20,110,.5),
+            rgba(6,14,30,.85)
+        );
+    box-shadow:0 0 30px rgba(120,80,255,.14), inset 0 0 20px rgba(21,158,255,.06);
+}
+
+.code-box small{
+    display:block;
+    color:#7fb0e0;
+    font-size:10px;
+    letter-spacing:2px;
+    margin-bottom:10px;
+}
+
+.code-box strong{
+    display:block;
+    font-size:clamp(24px, 5vw, 30px);
+    font-weight:800;
+    letter-spacing:3px;
+    background:linear-gradient(135deg,#50c4ff,#c9b8ff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.success-meta{
+    margin-top:22px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    font-size:12.5px;
+    color:#93aec7;
+}
+
+.success-meta b{
+    color:#dce8f5;
+}
+
+.success-actions{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.ghost-btn{
+    padding:13px 22px;
+    border-radius:12px;
+    border:1px solid rgba(47,118,174,.4);
+    background:rgba(255,255,255,.02);
+    color:#dce8f5;
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    font-family:inherit;
+    transition:.25s;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+}
+
+.ghost-btn:hover{
+    border-color:rgba(21,158,255,.6);
+    background:rgba(21,158,255,.1);
+}
+
+@media(max-width:600px){
+    .choice-grid,
+    .field-row{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+    <a href="index.html#home" class="logo">
+
+        <div class="logo-box">
+            <img src="logo.png" alt="Logo">
+        </div>
+
+        <div class="logo-text">
+            <strong>HP ROBOTICS</strong>
+            <span>COMPETITION</span>
+        </div>
+
+    </a>
+
+
+    <nav class="desktop-menu">
+
+        <a href="index.html">หน้าแรก</a>
+
+        <a href="competition.html">
+            รายการแข่งขัน
+        </a>
+
+        <a href="participants.html">
+            ผู้เข้าแข่งขัน
+        </a>
+
+
+        <a href="schedule.html">
+            กำหนดการ
+        </a>
+
+    </nav>
+
+
+    <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="เปิดเมนู"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+</header>
+
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+
+    <a href="index.html">หน้าแรก</a>
+    <a href="competition.html">รายการแข่งขัน</a>
+    <a href="participants.html">ผู้เข้าแข่งขัน</a>
+    <a href="invitation.html">ใบเชิญ</a>
+    <a href="schedule.html">กำหนดการ</a>
+
+</div>
+
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+
+    <div class="section-title">
+
+        <span class="line"></span>
+
+        <small>REGISTRATION FORM</small>
+
+        <h2>สมัครเข้าแข่งขัน</h2>
+
+    </div>
+
+    <p class="page-sub">
+        กรอกข้อมูลให้ครบทุกช่อง แนบสลิปการโอนเงินค่าสมัคร แล้วกด "ยืนยันการสมัคร"
+        ระบบจะออกรหัสยืนยันให้ทันที กรุณาเก็บรหัสนี้ไว้แสดงหน้างานในวันแข่งขัน
+    </p>
+
+</section>
+
+
+<!-- FORM -->
+<section class="form-wrap">
+
+    <div class="form-card" id="formCard">
+
+        <form id="registerForm" novalidate>
+
+            <!-- PAYMENT INFO — ข้อมูลบัญชีสำหรับโอนเงินค่าสมัคร (ตัวอย่าง แก้เป็นข้อมูลจริงได้เลย) -->
+            <div class="payment-info">
+                <div class="payment-info-inner">
+
+                    <div class="payment-info-head">
+
+                        <div class="payment-info-icon">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="6" width="20" height="14" rx="2.5"/>
+                                <path d="M2 10h20"/>
+                                <path d="M6 15h4"/>
+                            </svg>
+                        </div>
+
+                        <div>
+                            <strong>ข้อมูลบัญชีสำหรับโอนเงินค่าสมัคร</strong>
+                            <span>กรุณาโอนเงินและแนบสลิปในขั้นตอนถัดไป</span>
+                        </div>
+
+                    </div>
+
+                    <div class="payment-info-grid">
+
+                        <div class="payment-info-row">
+                            <span class="label">ธนาคาร</span>
+                            <span class="value">ธนาคารกสิกรไทย (KBank)</span>
+                        </div>
+
+                        <div class="payment-info-row">
+                            <span class="label">ชื่อบัญชี</span>
+                            <span class="value">โรงเรียนหอพระ</span>
+                        </div>
+
+                        <div class="payment-info-row full">
+                            <span class="label">เลขที่บัญชี</span>
+                            <span class="value account-number">123-4-56789-0</span>
+                        </div>
+
+                    </div>
+
+                    <p class="payment-info-note">
+                        — โปรดตรวจสอบชื่อบัญชีและเลขบัญชีให้ถูกต้องก่อนโอนทุกครั้ง
+                    </p>
+
+                </div>
+            </div>
+
+            <!-- COMPETITION CHOICE -->
+            <div class="field-group" id="group-competition">
+
+                <label class="field-label">
+                    เลือกรายการแข่งขัน <span class="required">*</span>
+                </label>
+
+                <div class="choice-grid">
+
+                    <label class="choice-card">
+                        <input type="radio" name="competition" value="Robot Soccer Championship">
+                        <div class="choice-card-body">
+                            <div class="choice-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <path d="M12 7.2 15.6 9.7l-1.4 4.2H9.8l-1.4-4.2Z" stroke-linejoin="round"/>
+                                    <path d="M12 7.2V4.2M15.6 9.7l2.7-1.9M14.2 13.9l1 2.9M9.8 13.9l-1 2.9M8.4 9.7l-2.7-1.9"/>
+                                </svg>
+                            </div>
+                            <strong>Robot Soccer</strong>
+                            <span>CHAMPIONSHIP</span>
+                        </div>
+                    </label>
+
+                    <label class="choice-card">
+                        <input type="radio" name="competition" value="Recycling Mission Challenge">
+                        <div class="choice-card-body">
+                            <div class="choice-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 3v6M12 3l-3 3M12 3l3 3"/>
+                                    <path d="M6 9l-2 5 4 4h8l4-4-2-5"/>
+                                </svg>
+                            </div>
+                            <strong>Recycling Mission</strong>
+                            <span>CHALLENGE</span>
+                        </div>
+                    </label>
+
+                </div>
+
+                <div class="field-error">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                    กรุณาเลือกรายการแข่งขัน
+                </div>
+
+            </div>
+
+            <!-- REGISTRATION TYPE: เดี่ยว / คู่ -->
+            <div class="field-group" id="group-regtype">
+
+                <label class="field-label">
+                    ประเภทการสมัคร <span class="required">*</span>
+                </label>
+
+                <div class="type-toggle">
+
+                    <button type="button" class="type-tab active" data-type="individual" id="typeTabIndividual">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M4 21v-1a8 8 0 0 1 16 0v1"/>
+                        </svg>
+                        เดี่ยว (Individual)
+                    </button>
+
+                    <button type="button" class="type-tab" data-type="team" id="typeTabTeam">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="8" r="3.2"/>
+                            <circle cx="17" cy="9" r="2.6"/>
+                            <path d="M2.5 20.5v-.8a6 6 0 0 1 11.6-2.1M13.2 20.5v-.6a4.6 4.6 0 0 1 8.3-2.7"/>
+                        </svg>
+                        คู่ (Team)
+                    </button>
+
+                </div>
+
+                <input type="hidden" name="registrationType" id="registrationTypeInput" value="individual">
+
+                <span class="field-hint" id="regtypeLockHint" style="display:none;">
+                    รายการ Robot Soccer Championship เปิดรับสมัครแบบคู่ (Team) เท่านั้น
+                </span>
+
+            </div>
+
+            <!-- TEAM NAME -->
+            <div class="field-group" id="group-teamname">
+                <label class="field-label">ชื่อทีม <span class="required">*</span></label>
+                <input type="text" class="text-input" name="teamName" placeholder="เช่น Horphra Bots">
+                <div class="field-error">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                    กรุณากรอกชื่อทีม
+                </div>
+            </div>
+
+            <!-- ===== เดี่ยว: ชื่อ / ชื่อเล่น / อายุ (1 ชุด) ===== -->
+            <div id="individualFields">
+
+                <div class="field-group" id="group-name">
+                    <label class="field-label">ชื่อ-นามสกุลผู้เข้าแข่งขัน <span class="required">*</span></label>
+                    <input type="text" class="text-input" name="name" placeholder="ชื่อจริง นามสกุลจริง">
+                    <div class="field-error">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                        กรุณากรอกชื่อ-นามสกุล
+                    </div>
+                </div>
+
+                <div class="field-row">
+
+                    <div class="field-group" id="group-nickname">
+                        <label class="field-label">ชื่อเล่น <span class="required">*</span></label>
+                        <input type="text" class="text-input" name="nickname" placeholder="เช่น สมชาย">
+                        <div class="field-error">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                            กรุณากรอกชื่อเล่น
+                        </div>
+                    </div>
+
+                    <div class="field-group" id="group-age">
+                        <label class="field-label">อายุ <span class="required">*</span></label>
+                        <input type="number" class="text-input" name="age" placeholder="เช่น 15" min="1" max="99">
+                        <div class="field-error">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                            กรุณากรอกอายุให้ถูกต้อง
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ===== คู่: ชื่อ / ชื่อเล่น / อายุ คนที่ 1 และคนที่ 2 ===== -->
+            <div id="teamFields" style="display:none;">
+
+                <div class="team-member-block">
+
+                    <div class="team-member-label">ผู้เข้าแข่งขันคนที่ 1</div>
+
+                    <div class="field-group" id="group-name-p1">
+                        <label class="field-label">ชื่อ-นามสกุล <span class="required">*</span></label>
+                        <input type="text" class="text-input" name="name_p1" placeholder="ชื่อจริง นามสกุลจริง">
+                        <div class="field-error">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                            กรุณากรอกชื่อ-นามสกุลคนที่ 1
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+
+                        <div class="field-group" id="group-nickname-p1">
+                            <label class="field-label">ชื่อเล่น <span class="required">*</span></label>
+                            <input type="text" class="text-input" name="nickname_p1" placeholder="เช่น สมชาย">
+                            <div class="field-error">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                                กรุณากรอกชื่อเล่นคนที่ 1
+                            </div>
+                        </div>
+
+                        <div class="field-group" id="group-age-p1">
+                            <label class="field-label">อายุ <span class="required">*</span></label>
+                            <input type="number" class="text-input" name="age_p1" placeholder="เช่น 15" min="1" max="99">
+                            <div class="field-error">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                                กรุณากรอกอายุคนที่ 1 ให้ถูกต้อง
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="team-member-block">
+
+                    <div class="team-member-label">ผู้เข้าแข่งขันคนที่ 2</div>
+
+                    <div class="field-group" id="group-name-p2">
+                        <label class="field-label">ชื่อ-นามสกุล <span class="required">*</span></label>
+                        <input type="text" class="text-input" name="name_p2" placeholder="ชื่อจริง นามสกุลจริง">
+                        <div class="field-error">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                            กรุณากรอกชื่อ-นามสกุลคนที่ 2
+                        </div>
+                    </div>
+
+                    <div class="field-row">
+
+                        <div class="field-group" id="group-nickname-p2">
+                            <label class="field-label">ชื่อเล่น <span class="required">*</span></label>
+                            <input type="text" class="text-input" name="nickname_p2" placeholder="เช่น สมหญิง">
+                            <div class="field-error">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                                กรุณากรอกชื่อเล่นคนที่ 2
+                            </div>
+                        </div>
+
+                        <div class="field-group" id="group-age-p2">
+                            <label class="field-label">อายุ <span class="required">*</span></label>
+                            <input type="number" class="text-input" name="age_p2" placeholder="เช่น 15" min="1" max="99">
+                            <div class="field-error">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                                กรุณากรอกอายุคนที่ 2 ให้ถูกต้อง
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="field-row">
+
+                <!-- PHONE -->
+                <div class="field-group" id="group-phone">
+                    <label class="field-label">เบอร์โทรศัพท์ <span class="required">*</span></label>
+                    <input type="tel" class="text-input" name="phone" placeholder="08X-XXX-XXXX">
+                    <div class="field-error">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                        กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง
+                    </div>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="field-group" id="group-email">
+                    <label class="field-label">อีเมล <span class="required">*</span></label>
+                    <input type="email" class="text-input" name="email" placeholder="name@email.com">
+                    <div class="field-error">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                        กรุณากรอกอีเมลให้ถูกต้อง
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TEACHER -->
+            <div class="field-group" id="group-teacher">
+                <label class="field-label">ชื่ออาจารย์ผู้ควบคุมทีม <span class="required">*</span></label>
+                <input type="text" class="text-input" name="teacher" placeholder="ชื่อ-นามสกุลอาจารย์">
+                <div class="field-error">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                    กรุณากรอกชื่ออาจารย์ผู้ควบคุม
+                </div>
+            </div>
+
+            <!-- PAYMENT SLIP -->
+            <div class="field-group" id="group-slip">
+                <label class="field-label">สลิปโอนเงินค่าสมัคร <span class="required">*</span></label>
+
+                <label class="upload-box" id="uploadBox">
+
+                    <input type="file" name="slip" id="slipInput" accept="image/*">
+
+                    <div class="upload-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 16V4M12 4l-4 4M12 4l4 4"/>
+                            <path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>
+                        </svg>
+                    </div>
+
+                    <div class="upload-text">
+                        <strong>แตะเพื่อแนบรูปสลิปโอนเงิน</strong>
+                        <span>รองรับไฟล์รูปภาพ JPG, PNG</span>
+                    </div>
+
+                </label>
+
+                <div class="upload-preview" id="uploadPreview">
+                    <img id="previewImg" src="" alt="สลิปโอนเงิน">
+                    <span class="upload-preview-name" id="previewName"></span>
+                    <button type="button" class="upload-preview-remove" id="removeSlip">ลบไฟล์</button>
+                </div>
+
+                <div class="field-error">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                    กรุณาแนบรูปสลิปโอนเงิน
+                </div>
+
+            </div>
+
+            <!-- FORM-LEVEL ERROR (เช่น อัปโหลด/บันทึกไม่สำเร็จ) -->
+            <div class="form-submit-error" id="submitError">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                <span id="submitErrorText">เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</span>
+            </div>
+
+            <!-- SUBMIT -->
+            <button type="submit" class="submit-btn" id="submitBtn">
+
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m5 13 4 4L19 7"/>
+                </svg>
+
+                <span id="submitBtnText">ยืนยันการสมัคร</span>
+
+            </button>
+
+            <div class="submit-note" id="submitNote">
+                กดยืนยันได้เมื่อกรอกข้อมูลครบทุกช่องและแนบสลิปแล้วเท่านั้น
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- SUCCESS STATE -->
+    <div class="form-card success-card" id="successCard">
+
+        <div class="success-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m5 13 4 4L19 7"/>
+            </svg>
+        </div>
+
+        <h3>สมัครสำเร็จ!</h3>
+        <p>บันทึกข้อมูลการสมัครของคุณเรียบร้อยแล้วทางทีมงานจะตรวจสอบข้อมูลภายใน 24 ชั่วโมง กรุณาเก็บรหัสยืนยันด้านล่างไว้แสดงต่อเจ้าหน้าที่ในวันแข่งขัน</p>
+
+        <div class="code-box">
+            <small>รหัสยืนยันการสมัคร</small>
+            <strong id="genCode">------</strong>
+        </div>
+
+        <div class="success-meta">
+            <div>รายการแข่งขัน: <b id="metaCompetition">-</b></div>
+            <div>ชื่อทีม: <b id="metaTeamName">-</b></div>
+            <div>ผู้สมัคร: <b id="metaName">-</b></div>
+        </div>
+
+        <div class="success-actions">
+            <a href="index.html" class="ghost-btn">กลับหน้าแรก</a>
+            <button type="button" class="ghost-btn" id="registerAnother">สมัครทีมอื่นเพิ่ม</button>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div>
+        <strong>HP ROBOTICS COMPETITION</strong>
+        <p>© 2026 Horpra School. All rights reserved.</p>
+    </div>
+
+    <a href="index.html#home">กลับด้านบน ↑</a>
+
+</footer>
+
+
+<script>
+
+const menuButton = document.getElementById("menuButton");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuButton.addEventListener("click", function(){
+    mobileMenu.classList.toggle("open");
+    menuButton.classList.toggle("active");
+});
+
+document.querySelectorAll(".mobile-menu a").forEach(function(link){
+    link.addEventListener("click", function(){
+        mobileMenu.classList.remove("open");
+        menuButton.classList.remove("active");
+    });
+});
+
+
+/* ===== SUPABASE CONFIG =====
+   URL และ anon/publishable key นี้ตั้งใจให้เปิดเผยฝั่งเว็บได้ ไม่ใช่คีย์ลับ
+   สิทธิ์การเข้าถึงจริงถูกควบคุมด้วย Row Level Security policy ที่ตั้งไว้ในฐานข้อมูลแล้ว */
+const SUPABASE_URL = "https://keckrebnpvcromotopzw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_vOulAP5DW2kk7Ldl2TI-cg_lH9Mya_8";
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+
+/* ===== TYPE TOGGLE: เดี่ยว / คู่ ===== */
+const typeTabIndividual = document.getElementById("typeTabIndividual");
+const typeTabTeam = document.getElementById("typeTabTeam");
+const registrationTypeInput = document.getElementById("registrationTypeInput");
+const individualFields = document.getElementById("individualFields");
+const teamFields = document.getElementById("teamFields");
+
+const individualGroupIds = ["group-name","group-nickname","group-age"];
+const teamGroupIds = ["group-name-p1","group-nickname-p1","group-age-p1","group-name-p2","group-nickname-p2","group-age-p2"];
+const commonGroupIds = ["group-competition","group-regtype","group-teamname","group-phone","group-email","group-teacher","group-slip"];
+
+function setRegistrationType(type){
+
+    registrationTypeInput.value = type;
+
+    if(type === "team"){
+        typeTabTeam.classList.add("active");
+        typeTabIndividual.classList.remove("active");
+        teamFields.style.display = "";
+        individualFields.style.display = "none";
+    }else{
+        typeTabIndividual.classList.add("active");
+        typeTabTeam.classList.remove("active");
+        individualFields.style.display = "";
+        teamFields.style.display = "none";
+    }
+
+    // เคลียร์ error ของอีกฝั่งที่ถูกซ่อนไปทุกครั้งที่สลับ
+    individualGroupIds.concat(teamGroupIds).forEach(clearFieldError);
+
+}
+
+typeTabIndividual.addEventListener("click", function(){ setRegistrationType("individual"); });
+typeTabTeam.addEventListener("click", function(){ setRegistrationType("team"); });
+
+
+/* ===== SOCCER = คู่ (Team) เท่านั้น =====
+   พอเลือก Robot Soccer Championship ให้ล็อกประเภทเป็นคู่ทันที
+   และปิดปุ่ม "เดี่ยว" ไม่ให้กดสลับได้ จนกว่าจะเปลี่ยนไปเลือกรายการอื่น */
+const regtypeLockHint = document.getElementById("regtypeLockHint");
+const competitionRadios = document.querySelectorAll('input[name="competition"]');
+
+function handleCompetitionChange(){
+
+    const selected = document.querySelector('input[name="competition"]:checked');
+    if(!selected) return;
+
+    const isSoccer = selected.value.indexOf("Soccer") !== -1;
+
+    if(isSoccer){
+        setRegistrationType("team");
+        typeTabIndividual.disabled = true;
+        regtypeLockHint.style.display = "block";
+    }else{
+        typeTabIndividual.disabled = false;
+        regtypeLockHint.style.display = "none";
+    }
+
+}
+
+competitionRadios.forEach(function(radio){
+    radio.addEventListener("change", handleCompetitionChange);
+});
+
+
+/* ===== FILE UPLOAD PREVIEW ===== */
+const slipInput = document.getElementById("slipInput");
+const uploadPreview = document.getElementById("uploadPreview");
+const previewImg = document.getElementById("previewImg");
+const previewName = document.getElementById("previewName");
+const removeSlip = document.getElementById("removeSlip");
+const uploadBox = document.getElementById("uploadBox");
+
+slipInput.addEventListener("change", function(){
+
+    const file = slipInput.files[0];
+
+    if(!file){
+        uploadPreview.classList.remove("show");
+        return;
+    }
+
+    previewName.textContent = file.name;
+
+    const reader = new FileReader();
+    reader.onload = function(e){
+        previewImg.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    uploadPreview.classList.add("show");
+    clearFieldError("group-slip");
+
+});
+
+removeSlip.addEventListener("click", function(){
+    slipInput.value = "";
+    uploadPreview.classList.remove("show");
+    previewImg.src = "";
+});
+
+
+/* ===== VALIDATION + SUBMIT ===== */
+const form = document.getElementById("registerForm");
+const formCard = document.getElementById("formCard");
+const successCard = document.getElementById("successCard");
+
+function showFieldError(groupId){
+    const group = document.getElementById(groupId);
+    if(!group) return;
+    group.classList.add("invalid");
+    const err = group.querySelector(".field-error");
+    if(err) err.classList.add("show");
+}
+
+function clearFieldError(groupId){
+    const group = document.getElementById(groupId);
+    if(!group) return;
+    group.classList.remove("invalid");
+    const err = group.querySelector(".field-error");
+    if(err) err.classList.remove("show");
+}
+
+function isValidEmail(value){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function isValidPhone(value){
+    const digits = value.replace(/[^0-9]/g, "");
+    return digits.length >= 9 && digits.length <= 10;
+}
+
+function isValidAge(value){
+    return value !== "" && !isNaN(value) && Number(value) > 0;
+}
+
+/* ===== สุ่มโค้ดยืนยันหน้างาน =====
+   รูปแบบ: PREFIX-XXXX-XXXX (ตัวอักษร/ตัวเลข อ่านง่าย ตัด 0,O,1,I ที่กำกวมออก)
+   PREFIX เปลี่ยนตามรายการแข่งขันที่เลือก (RS = Robot Soccer, RM = Recycling) */
+function generateConfirmationCode(competition){
+
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    const prefix = competition.indexOf("Soccer") !== -1 ? "RS" : "RM";
+
+    function randomChunk(len){
+        let out = "";
+        for(let i = 0; i < len; i++){
+            out += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return out;
+    }
+
+    return prefix + "-" + randomChunk(4) + "-" + randomChunk(4);
+}
+
+const submitBtn = document.getElementById("submitBtn");
+const submitBtnText = document.getElementById("submitBtnText");
+const submitError = document.getElementById("submitError");
+const submitErrorText = document.getElementById("submitErrorText");
+
+function setSubmitLoading(isLoading){
+    submitBtn.disabled = isLoading;
+    if(isLoading){
+        submitBtn.dataset.originalHtml = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="spinner"></span><span>กำลังบันทึกข้อมูล...</span>';
+    } else if(submitBtn.dataset.originalHtml){
+        submitBtn.innerHTML = submitBtn.dataset.originalHtml;
+    }
+}
+
+function showSubmitError(message){
+    submitErrorText.textContent = message;
+    submitError.classList.add("show");
+    submitError.scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+function clearSubmitError(){
+    submitError.classList.remove("show");
+}
+
+form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+    clearSubmitError();
+
+    let firstInvalid = null;
+    let valid = true;
+
+    function markInvalid(groupId){
+        valid = false;
+        showFieldError(groupId);
+        if(!firstInvalid) firstInvalid = document.getElementById(groupId);
+    }
+
+    const regType = registrationTypeInput.value; // "individual" | "team"
+
+    // reset error ของทุกช่องก่อนตรวจใหม่ (ทั้งฝั่งเดี่ยวและคู่ เผื่อเคยขึ้น error ค้างไว้)
+    commonGroupIds.concat(individualGroupIds, teamGroupIds).forEach(clearFieldError);
+
+    const competitionInput = form.querySelector('input[name="competition"]:checked');
+    const teamName = form.teamName.value.trim();
+    const phone = form.phone.value.trim();
+    const email = form.email.value.trim();
+    const teacher = form.teacher.value.trim();
+    const slip = slipInput.files[0];
+
+    if(!competitionInput) markInvalid("group-competition");
+    if(teamName === "") markInvalid("group-teamname");
+
+    // ข้อมูลผู้เข้าแข่งขัน — ตรวจตามประเภทที่เลือกเท่านั้น
+    let name = "", nickname = "", age = "";
+    let name2 = "", nickname2 = "", age2 = "";
+
+    if(regType === "team"){
+
+        name = form.name_p1.value.trim();
+        nickname = form.nickname_p1.value.trim();
+        age = form.age_p1.value.trim();
+
+        name2 = form.name_p2.value.trim();
+        nickname2 = form.nickname_p2.value.trim();
+        age2 = form.age_p2.value.trim();
+
+        if(name === "") markInvalid("group-name-p1");
+        if(nickname === "") markInvalid("group-nickname-p1");
+        if(!isValidAge(age)) markInvalid("group-age-p1");
+
+        if(name2 === "") markInvalid("group-name-p2");
+        if(nickname2 === "") markInvalid("group-nickname-p2");
+        if(!isValidAge(age2)) markInvalid("group-age-p2");
+
+    }else{
+
+        name = form.name.value.trim();
+        nickname = form.nickname.value.trim();
+        age = form.age.value.trim();
+
+        if(name === "") markInvalid("group-name");
+        if(nickname === "") markInvalid("group-nickname");
+        if(!isValidAge(age)) markInvalid("group-age");
+
+    }
+
+    if(phone === "" || !isValidPhone(phone)) markInvalid("group-phone");
+    if(email === "" || !isValidEmail(email)) markInvalid("group-email");
+    if(teacher === "") markInvalid("group-teacher");
+    if(!slip) markInvalid("group-slip");
+
+    if(!valid){
+        if(firstInvalid){
+            firstInvalid.scrollIntoView({behavior:"smooth", block:"center"});
+        }
+        return;
+    }
+
+    // ผ่านการตรวจครบทุกช่อง -> สุ่มโค้ดยืนยัน แล้วอัปโหลด/บันทึกขึ้น Supabase จริง
+    const code = generateConfirmationCode(competitionInput.value);
+
+    setSubmitLoading(true);
+
+    try{
+
+        // 1) อัปโหลดรูปสลิปเข้า Storage bucket "payment-slips"
+        const fileExt = slip.name.split(".").pop();
+        const filePath = code + "_" + Date.now() + "." + fileExt;
+
+        const { error: uploadError } = await supabaseClient
+            .storage
+            .from("payment-slips")
+            .upload(filePath, slip);
+
+        if(uploadError){
+            throw new Error("อัปโหลดสลิปไม่สำเร็จ: " + uploadError.message);
+        }
+
+        const { data: publicUrlData } = supabaseClient
+            .storage
+            .from("payment-slips")
+            .getPublicUrl(filePath);
+
+        const slipUrl = publicUrlData.publicUrl;
+
+        // 2) บันทึกข้อมูลการสมัคร — แยกตาราง 2 ชุด
+        //    เดี่ยว (individual)  -> ตาราง "registrations"
+        //    คู่ (team)           -> ตาราง "team_registrations" (มีคอลัมน์คนที่ 1 และคนที่ 2 แยกกัน)
+        let insertError;
+
+        if(regType === "team"){
+
+            const result = await supabaseClient
+                .from("team_registrations")
+                .insert({
+                    competition: competitionInput.value,
+                    team_name: teamName,
+                    full_name_1: name,
+                    nickname_1: nickname,
+                    age_1: Number(age),
+                    full_name_2: name2,
+                    nickname_2: nickname2,
+                    age_2: Number(age2),
+                    phone: phone,
+                    email: email,
+                    teacher: teacher,
+                    slip_url: slipUrl,
+                    confirm_code: code
+                });
+
+            insertError = result.error;
+
+        }else{
+
+            const result = await supabaseClient
+                .from("registrations")
+                .insert({
+                    competition: competitionInput.value,
+                    team_name: teamName,
+                    full_name: name,
+                    nickname: nickname,
+                    age: Number(age),
+                    phone: phone,
+                    email: email,
+                    teacher: teacher,
+                    slip_url: slipUrl,
+                    confirm_code: code
+                });
+
+            insertError = result.error;
+
+        }
+
+        if(insertError){
+            throw new Error("บันทึกข้อมูลไม่สำเร็จ: " + insertError.message);
+        }
+
+        // สำเร็จ -> แสดงผลลัพธ์พร้อมโค้ดยืนยัน
+        document.getElementById("genCode").textContent = code;
+        document.getElementById("metaCompetition").textContent = competitionInput.value;
+        document.getElementById("metaTeamName").textContent = teamName;
+
+        document.getElementById("metaName").textContent =
+            regType === "team"
+                ? name + " (" + nickname + ") & " + name2 + " (" + nickname2 + ")"
+                : name + " (" + nickname + ")";
+
+        formCard.classList.add("hidden");
+        successCard.classList.add("show");
+        successCard.scrollIntoView({behavior:"smooth", block:"start"});
+
+    }catch(err){
+        showSubmitError(err.message || "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง หรือแจ้งเจ้าหน้าที่");
+    }finally{
+        setSubmitLoading(false);
+    }
+
+});
+
+document.getElementById("registerAnother").addEventListener("click", function(){
+
+    form.reset();
+    uploadPreview.classList.remove("show");
+    previewImg.src = "";
+    clearSubmitError();
+    setRegistrationType("individual");
+    typeTabIndividual.disabled = false;
+    regtypeLockHint.style.display = "none";
+
+    commonGroupIds.concat(individualGroupIds, teamGroupIds).forEach(clearFieldError);
+
+    successCard.classList.remove("show");
+    formCard.classList.remove("hidden");
+    formCard.scrollIntoView({behavior:"smooth", block:"start"});
+
+});
+
+</script>
+
+</body>
+</html>

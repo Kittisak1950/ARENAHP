@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>รายชื่อผู้เข้าแข่งขัน - HP Robotics Competition</title>
+
+<link rel="icon" type="image/png" href="Logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+    font-size:clamp(14px, 1.4vw + 8px, 17px);
+}
+
+body{
+    background:#020812;
+    color:#fff;
+    font-family:Arial,"Tahoma",sans-serif;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(0,140,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,140,255,.045) 1px,transparent 1px);
+    background-size:55px 55px;
+    pointer-events:none;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    right:-250px;
+    top:100px;
+    border-radius:50%;
+    background:#008cff;
+    filter:blur(180px);
+    opacity:.12;
+    pointer-events:none;
+    z-index:-1;
+}
+
+html::before{
+    content:"";
+    position:fixed;
+    width:520px;
+    height:520px;
+    left:-200px;
+    bottom:-160px;
+    border-radius:50%;
+    background:#149eff;
+    filter:blur(170px);
+    opacity:.10;
+    pointer-events:none;
+    z-index:-1;
+    animation:driftGlowB 20s ease-in-out infinite alternate;
+}
+
+html::after{
+    content:"";
+    position:fixed;
+    width:380px;
+    height:380px;
+    left:45%;
+    top:35%;
+    border-radius:50%;
+    background:#7f5cff;
+    filter:blur(160px);
+    opacity:.07;
+    pointer-events:none;
+    z-index:-1;
+    animation:driftGlowC 24s ease-in-out infinite alternate;
+}
+
+@keyframes driftGlowB{
+    0%{ transform:translate(0,0) scale(1); }
+    100%{ transform:translate(110px,-70px) scale(1.2); }
+}
+
+@keyframes driftGlowC{
+    0%{ transform:translate(-70px,-50px) scale(.85); opacity:.06; }
+    100%{ transform:translate(80px,60px) scale(1.15); opacity:.12; }
+}
+
+.scroll::before,
+.event::before,
+footer::before{
+    content:"";
+    position:fixed;
+    top:-5%;
+    width:2px;
+    height:2px;
+    background:#fff;
+    border-radius:50%;
+    box-shadow:0 0 6px 1px rgba(255,255,255,.9);
+    pointer-events:none;
+    z-index:5;
+    opacity:0;
+}
+
+.scroll::before{
+    left:15%;
+    animation:shootStar 5s linear infinite;
+    animation-delay:.5s;
+}
+
+.event::before{
+    left:55%;
+    animation:shootStar 6s linear infinite;
+    animation-delay:2s;
+}
+
+footer::before{
+    left:80%;
+    animation:shootStar 5.5s linear infinite;
+    animation-delay:3.5s;
+}
+
+@keyframes shootStar{
+    0%{
+        transform:translate(0,0) rotate(215deg);
+        opacity:0;
+    }
+    4%{
+        opacity:1;
+    }
+    20%{
+        transform:translate(-260px,260px) rotate(215deg);
+        opacity:0;
+    }
+    100%{
+        transform:translate(-260px,260px) rotate(215deg);
+        opacity:0;
+    }
+}
+
+/* NAVBAR */
+.navbar{
+    width:min(1200px,calc(100% - 50px));
+    height:clamp(70px, 8vw, 90px);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:clamp(8px, 1.5vw, 12px);
+    color:white;
+    text-decoration:none;
+}
+
+.logo-box{
+    width:clamp(40px, 6vw, 48px);
+    height:clamp(40px, 6vw, 48px);
+    aspect-ratio:1/1;
+    border:none;
+    border-radius:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:transparent;
+    flex-shrink:0;
+}
+
+.logo-box img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.logo-text strong{
+    display:block;
+    font-size:clamp(12px, 1.2vw + 8px, 15px);
+    letter-spacing:1px;
+    white-space:nowrap;
+}
+
+.logo-text span{
+    display:block;
+    color:#159eff;
+    font-size:clamp(8px, 0.6vw + 6px, 10px);
+    letter-spacing:2px;
+    margin-top:3px;
+    white-space:nowrap;
+}
+
+/* DESKTOP MENU */
+.desktop-menu{
+    display:flex;
+    gap:30px;
+}
+
+.desktop-menu a{
+    color:#91a8bf;
+    text-decoration:none;
+    transition:.25s;
+}
+
+.desktop-menu a:hover{
+    color:#fff;
+    text-shadow:0 0 15px #009cff;
+}
+
+/* MENU BUTTON */
+.menu-button{
+    width:clamp(44px, 6vw, 52px);
+    height:clamp(44px, 6vw, 52px);
+    border:1px solid #128edc;
+    border-radius:10px;
+    background:rgba(0,90,170,.08);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    cursor:pointer;
+    flex-shrink:0;
+}
+
+.menu-button span{
+    width:27px;
+    height:3px;
+    background:#12a4ff;
+    border-radius:5px;
+    transition:.3s;
+}
+
+.menu-button.active span:nth-child(1){
+    transform:translateY(9px) rotate(45deg);
+}
+
+.menu-button.active span:nth-child(2){
+    opacity:0;
+}
+
+.menu-button.active span:nth-child(3){
+    transform:translateY(-9px) rotate(-45deg);
+}
+
+/* MOBILE MENU */
+.mobile-menu{
+    display:none;
+    position:fixed;
+    z-index:100;
+    top:80px;
+    right:25px;
+    width:280px;
+    max-width:calc(100vw - 50px);
+    padding:12px;
+    border:1px solid #128edc;
+    border-radius:16px;
+    background:rgba(2,12,25,.96);
+    backdrop-filter:blur(20px);
+    box-shadow:0 20px 70px rgba(0,0,0,.6);
+}
+
+.mobile-menu.open{
+    display:block;
+}
+
+.mobile-menu a{
+    display:block;
+    padding:15px;
+    border-radius:10px;
+    color:#b5c9dc;
+    text-decoration:none;
+}
+
+.mobile-menu a:hover{
+    background:rgba(0,140,255,.12);
+    color:white;
+}
+
+/* SCROLL (kept for parity with site-wide selectors) */
+.scroll{
+    width:min(1200px,calc(100% - 50px));
+    margin:-10px auto 65px;
+    color:#5f7892;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+/* SECTION TITLE (shared) */
+.section-title{
+    text-align:center;
+    margin-bottom:42px;
+}
+
+.section-title .line{
+    display:block;
+    width:55px;
+    height:2px;
+    margin:auto auto 15px;
+    background:#129cff;
+    box-shadow:0 0 15px #129cff;
+}
+
+.section-title small{
+    color:#4b8dbd;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-size:clamp(26px, 4vw, 38px);
+    margin-top:6px;
+}
+
+/* FOOTER */
+footer{
+    width:min(1200px,calc(100% - 50px));
+    margin:auto;
+    padding:28px 0 40px;
+
+    border-top:1px solid rgba(28,145,255,.18);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    color:#63809c;
+}
+
+footer strong{
+    color:#b6d0e8;
+    font-size:12px;
+}
+
+footer p{
+    margin-top:5px;
+    font-size:12px;
+}
+
+footer a{
+    color:#23a8ff;
+    text-decoration:none;
+}
+
+/* TABLET */
+@media(max-width:850px){
+
+    .desktop-menu{
+        display:none;
+    }
+}
+
+/* MOBILE */
+@media(max-width:520px){
+
+    .navbar,
+    .scroll,
+    .event,
+    .location,
+    footer{
+        width:calc(100% - 28px);
+    }
+}
+
+
+
+/* ฟอนต์ Prompt ให้ดูโปรขึ้น เฉพาะหน้านี้ */
+body{
+    font-family:'Prompt',Arial,"Tahoma",sans-serif;
+}
+
+/* ===== ROSTER PAGE (รายชื่อผู้เข้าแข่งขัน) ===== */
+
+.page-header{
+    width:min(1200px,calc(100% - 50px));
+    margin:70px auto 36px;
+}
+
+/* กล่องค้นหาชื่อ */
+.roster-search-wrap{
+    width:min(1200px,calc(100% - 50px));
+    margin:0 auto 50px;
+}
+
+.roster-search{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    max-width:420px;
+    padding:14px 20px;
+    border-radius:14px;
+
+    border:1px solid rgba(47,118,174,.35);
+    background:rgba(5,16,30,.7);
+    backdrop-filter:blur(10px);
+    transition:border-color .3s, box-shadow .3s;
+}
+
+.roster-search:focus-within{
+    border-color:rgba(21,158,255,.6);
+    box-shadow:0 0 0 3px rgba(21,158,255,.12);
+}
+
+.roster-search svg{
+    width:18px;
+    height:18px;
+    flex-shrink:0;
+    color:#5c9bcf;
+}
+
+.roster-search input{
+    flex:1;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:#fff;
+    font-family:inherit;
+    font-size:14px;
+}
+
+.roster-search input::placeholder{
+    color:#5c7692;
+}
+
+.roster-count{
+    margin-top:12px;
+    color:#5c7692;
+    font-size:12.5px;
+    letter-spacing:.3px;
+}
+
+.roster-count strong{
+    color:#7fc4ff;
+    font-weight:700;
+}
+
+/* ===== SECTION แยกเดี่ยว/คู่ =====
+   คนละ section ชัดเจน ไม่ปนกัน แต่ละ section มีหัวข้อ + จำนวนบล็อกของตัวเอง
+   (จำนวนคำนวณจากบล็อกจริงในหน้า ไม่ใช่ค่าตายตัว — เพิ่มบล็อกแล้วเลขขึ้นเองอัตโนมัติ) */
+.roster-section{
+    width:min(1200px,calc(100% - 50px));
+    margin:0 auto 60px;
+}
+
+.roster-section:last-of-type{
+    margin-bottom:100px;
+}
+
+.roster-section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:20px;
+    padding-bottom:14px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.roster-section-head h3{
+    font-size:19px;
+    font-weight:800;
+    letter-spacing:-.2px;
+}
+
+.roster-section-head h3 span{
+    display:block;
+    margin-top:3px;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    color:#5c9bcf;
+    text-transform:uppercase;
+}
+
+.roster-section-count{
+    flex-shrink:0;
+    font-size:12.5px;
+    color:#5c7692;
+    letter-spacing:.3px;
+}
+
+.roster-section-count strong{
+    color:#7fc4ff;
+    font-weight:700;
+}
+
+/* กริดการ์ดผู้สมัคร — เพิ่มบล็อกใหม่ได้เรื่อยๆ แค่ copy .roster-card อันหนึ่งไปวางต่อ */
+.roster-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:20px;
+}
+
+.roster-card{
+    position:relative;
+    border-radius:20px;
+    padding:26px 26px 24px;
+    overflow:hidden;
+    isolation:isolate;
+
+    border:1px solid rgba(47,118,174,.32);
+    background:
+        linear-gradient(
+            165deg,
+            rgba(10,32,54,.8),
+            rgba(2,10,20,.92)
+        );
+    backdrop-filter:blur(10px);
+    transition:border-color .35s, box-shadow .35s, transform .35s;
+}
+
+.roster-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 0% 0%, rgba(21,158,255,.12), transparent 60%);
+    pointer-events:none;
+}
+
+.roster-card:hover{
+    border-color:rgba(21,158,255,.5);
+    box-shadow:0 18px 40px rgba(0,110,255,.14);
+    transform:translateY(-4px);
+}
+
+.roster-event-tag{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 14px;
+    border-radius:999px;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.8px;
+
+    border:1px solid rgba(21,158,255,.4);
+    background:rgba(21,158,255,.1);
+    color:#7fc4ff;
+}
+
+.roster-event-tag.recycle{
+    border-color:rgba(80,220,170,.4);
+    background:rgba(80,220,170,.1);
+    color:#7fe4bd;
+}
+
+/* ชื่อทีม — เด่นที่สุดในการ์ด */
+.roster-team{
+    position:relative;
+    margin-top:16px;
+    font-size:23px;
+    font-weight:800;
+    letter-spacing:-.2px;
+    line-height:1.25;
+}
+
+.roster-divider{
+    position:relative;
+    height:1px;
+    margin:18px 0;
+    background:linear-gradient(90deg, rgba(255,255,255,.14), transparent 85%);
+}
+
+.roster-members{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.roster-row{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+}
+
+.roster-row-icon{
+    width:34px;
+    height:34px;
+    flex-shrink:0;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(21,158,255,.1);
+    border:1px solid rgba(21,158,255,.28);
+}
+
+.roster-row-icon svg{
+    width:16px;
+    height:16px;
+    color:#7fc4ff;
+}
+
+.roster-label{
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:#5c7692;
+}
+
+.roster-value{
+    margin-top:2px;
+    font-size:14.5px;
+    font-weight:600;
+    color:#e6eefa;
+}
+
+@media(max-width:520px){
+    .page-header,
+    .roster-search-wrap,
+    .roster-section{
+        width:calc(100% - 28px);
+    }
+
+    .roster-search{
+        max-width:100%;
+    }
+
+    .roster-section-head{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:4px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+    <a href="index.html#home" class="logo">
+
+        <div class="logo-box">
+            <img src="logo.png" alt="Logo">
+        </div>
+
+        <div class="logo-text">
+            <strong>HP ROBOTICS</strong>
+            <span>COMPETITION</span>
+        </div>
+
+    </a>
+
+
+    <nav class="desktop-menu">
+
+        <a href="index.html">หน้าแรก</a>
+
+        <a href="competition.html">
+            รายการแข่งขัน
+        </a>
+
+
+        <a href="schedule.html">
+            กำหนดการ
+        </a>
+
+    </nav>
+
+
+    <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="เปิดเมนู"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+</header>
+
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+
+    <a href="index.html">
+        หน้าแรก
+    </a>
+
+    <a href="competition.html">
+        รายการแข่งขัน
+    </a>
+
+    <a href="invitation.html">
+        ใบเชิญ
+    </a>
+
+    <a href="schedule.html">
+        กำหนดการ
+    </a>
+
+</div>
+
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+
+    <div class="section-title" style="text-align:left; margin-bottom:0;">
+
+        <span class="line" style="margin:0 0 15px 0;"></span>
+
+        <small>
+            PARTICIPANTS
+        </small>
+
+        <h2>
+            รายชื่อผู้เข้าแข่งขัน
+        </h2>
+
+    </div>
+
+</section>
+
+
+<!-- SEARCH -->
+<div class="roster-search-wrap">
+
+    <div class="roster-search">
+
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/>
+            <path d="m21 21-4.3-4.3"/>
+        </svg>
+
+        <input type="text" placeholder="ค้นหาชื่อผู้เข้าแข่งขัน หรือชื่อทีม...">
+
+    </div>
+
+</div>
+
+
+<!-- ===== ประเภทเดี่ยว (INDIVIDUAL) ===== -->
+<section class="roster-section">
+
+    <div class="roster-section-head">
+
+        <h3>
+            ประเภทเดี่ยว
+            <span>INDIVIDUAL</span>
+        </h3>
+
+        <div class="roster-section-count">
+            ทั้งหมด <strong class="js-count" id="countIndividual">0</strong> ทีม
+        </div>
+
+    </div>
+
+    <!-- เพิ่มบล็อกใหม่โดย copy .roster-card ทั้งก้อนไปวางต่อในกริดนี้ได้เลย -->
+    <div class="roster-grid" id="gridIndividual">
+
+        <!-- ตัวอย่าง 1 บล็อก (เดี่ยว) -->
+        <div class="roster-card">
+
+            <span class="roster-event-tag recycle">Recycling Mission Challenge</span>
+
+            <h3 class="roster-team">
+                ทีม Thunder Bolt
+            </h3>
+
+            <div class="roster-divider"></div>
+
+            <div class="roster-members">
+
+                <div class="roster-row">
+
+                    <span class="roster-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <div class="roster-label">ผู้เข้าแข่งขัน</div>
+                        <div class="roster-value">เด็กชายสมชาย ใจดี</div>
+                    </div>
+
+                </div>
+
+                <div class="roster-row">
+
+                    <span class="roster-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3 2 8l10 5 10-5-10-5Z"/>
+                            <path d="M6 10.5V16c0 1.5 2.5 3 6 3s6-1.5 6-3v-5.5"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <div class="roster-label">โรงเรียน</div>
+                        <div class="roster-value">โรงเรียนหอพระ</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===== ประเภทคู่ (TEAM) ===== -->
+<section class="roster-section">
+
+    <div class="roster-section-head">
+
+        <h3>
+            ประเภทคู่
+            <span>TEAM</span>
+        </h3>
+
+        <div class="roster-section-count">
+            ทั้งหมด <strong class="js-count" id="countTeam">0</strong> ทีม
+        </div>
+
+    </div>
+
+    <!-- เพิ่มบล็อกใหม่โดย copy .roster-card ทั้งก้อนไปวางต่อในกริดนี้ได้เลย -->
+    <div class="roster-grid" id="gridTeam">
+
+        <!-- ตัวอย่าง 1 บล็อก (คู่ — มีผู้เข้าแข่งขัน 2 คน) -->
+        <div class="roster-card">
+
+            <span class="roster-event-tag">Robot Soccer Championship</span>
+
+            <h3 class="roster-team">
+                ทีม Sky Warriors
+            </h3>
+
+            <div class="roster-divider"></div>
+
+            <div class="roster-members">
+
+                <div class="roster-row">
+
+                    <span class="roster-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <div class="roster-label">ผู้เข้าแข่งขันคนที่ 1</div>
+                        <div class="roster-value">เด็กชายกิตติ มั่นคง</div>
+                    </div>
+
+                </div>
+
+                <div class="roster-row">
+
+                    <span class="roster-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <div class="roster-label">ผู้เข้าแข่งขันคนที่ 2</div>
+                        <div class="roster-value">เด็กหญิงปวีณา แสงทอง</div>
+                    </div>
+
+                </div>
+
+                <div class="roster-row">
+
+                    <span class="roster-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3 2 8l10 5 10-5-10-5Z"/>
+                            <path d="M6 10.5V16c0 1.5 2.5 3 6 3s6-1.5 6-3v-5.5"/>
+                        </svg>
+                    </span>
+
+                    <div>
+                        <div class="roster-label">โรงเรียน</div>
+                        <div class="roster-value">โรงเรียนหอพระ</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div>
+
+        <strong>
+            HP ROBOTICS COMPETITION
+        </strong>
+
+        <p>
+            © 2026 Horpra School.
+            All rights reserved.
+        </p>
+
+    </div>
+
+    <a href="index.html#home">
+        กลับด้านบน ↑
+    </a>
+
+</footer>
+
+
+<script>
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+
+menuButton.addEventListener(
+    "click",
+    function(){
+
+        mobileMenu.classList.toggle("open");
+
+        menuButton.classList.toggle("active");
+
+    }
+);
+
+
+document
+    .querySelectorAll(".mobile-menu a")
+    .forEach(function(link){
+
+        link.addEventListener(
+            "click",
+            function(){
+
+                mobileMenu.classList.remove("open");
+
+                menuButton.classList.remove("active");
+
+            }
+        );
+
+    });
+
+
+/* ===== นับจำนวนบล็อกอัตโนมัติ =====
+   นับจาก .roster-card ที่มีอยู่จริงในแต่ละกริด ไม่ใช่ค่าตายตัว
+   เพิ่ม/ลบบล็อกแล้วตัวเลขจะอัปเดตเองทุกครั้งที่โหลดหน้า */
+function updateRosterCounts(){
+
+    const individualCount =
+        document.querySelectorAll("#gridIndividual .roster-card").length;
+
+    const teamCount =
+        document.querySelectorAll("#gridTeam .roster-card").length;
+
+    document.getElementById("countIndividual").textContent = individualCount;
+    document.getElementById("countTeam").textContent = teamCount;
+
+}
+
+updateRosterCounts();
+
+
+/* ===== ค้นหาชื่อ — กรองบล็อกในทั้งสองส่วน (เดี่ยว + คู่) พร้อมกัน ===== */
+const rosterSearchInput =
+    document.querySelector(".roster-search input");
+
+if(rosterSearchInput){
+
+    rosterSearchInput.addEventListener("input", function(){
+
+        const keyword = this.value.trim().toLowerCase();
+
+        document.querySelectorAll(".roster-card").forEach(function(card){
+
+            const text = card.textContent.toLowerCase();
+
+            card.style.display =
+                text.includes(keyword) ? "" : "none";
+
+        });
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

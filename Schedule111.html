@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+<title>กำหนดการ | HP Robotics Competition</title>
+
+<link rel="icon" type="image/png" href="Logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+    font-size:clamp(14px, 1.4vw + 8px, 17px);
+}
+
+body{
+    background:#020812;
+    color:#fff;
+    font-family:Arial,"Tahoma",sans-serif;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(0,140,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(0,140,255,.045) 1px,transparent 1px);
+    background-size:55px 55px;
+    pointer-events:none;
+    z-index:-2;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:600px;
+    height:600px;
+    right:-250px;
+    top:100px;
+    border-radius:50%;
+    background:#008cff;
+    filter:blur(180px);
+    opacity:.12;
+    pointer-events:none;
+    z-index:-1;
+}
+
+html::before{
+    content:"";
+    position:fixed;
+    width:520px;
+    height:520px;
+    left:-200px;
+    bottom:-160px;
+    border-radius:50%;
+    background:#149eff;
+    filter:blur(170px);
+    opacity:.10;
+    pointer-events:none;
+    z-index:-1;
+    animation:driftGlowB 20s ease-in-out infinite alternate;
+}
+
+html::after{
+    content:"";
+    position:fixed;
+    width:380px;
+    height:380px;
+    left:45%;
+    top:35%;
+    border-radius:50%;
+    background:#7f5cff;
+    filter:blur(160px);
+    opacity:.07;
+    pointer-events:none;
+    z-index:-1;
+    animation:driftGlowC 24s ease-in-out infinite alternate;
+}
+
+@keyframes driftGlowB{
+    0%{ transform:translate(0,0) scale(1); }
+    100%{ transform:translate(110px,-70px) scale(1.2); }
+}
+
+@keyframes driftGlowC{
+    0%{ transform:translate(-70px,-50px) scale(.85); opacity:.06; }
+    100%{ transform:translate(80px,60px) scale(1.15); opacity:.12; }
+}
+
+/* ดาวตก */
+.event::before,
+footer::before{
+    content:"";
+    position:fixed;
+    top:-5%;
+    width:2px;
+    height:2px;
+    background:#fff;
+    border-radius:50%;
+    box-shadow:0 0 6px 1px rgba(255,255,255,.9);
+    pointer-events:none;
+    z-index:5;
+    opacity:0;
+}
+
+.event::before{
+    left:55%;
+    animation:shootStar 6s linear infinite;
+    animation-delay:2s;
+}
+
+footer::before{
+    left:80%;
+    animation:shootStar 5.5s linear infinite;
+    animation-delay:3.5s;
+}
+
+@keyframes shootStar{
+    0%{
+        transform:translate(0,0) rotate(215deg);
+        opacity:0;
+    }
+    4%{
+        opacity:1;
+    }
+    20%{
+        transform:translate(-260px,260px) rotate(215deg);
+        opacity:0;
+    }
+    100%{
+        transform:translate(-260px,260px) rotate(215deg);
+        opacity:0;
+    }
+}
+
+/* NAVBAR */
+.navbar{
+    width:min(1200px,calc(100% - 50px));
+    height:clamp(70px, 8vw, 90px);
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:clamp(8px, 1.5vw, 12px);
+    color:white;
+    text-decoration:none;
+}
+
+.logo-box{
+    width:clamp(40px, 6vw, 48px);
+    height:clamp(40px, 6vw, 48px);
+    aspect-ratio:1/1;
+    border:none;
+    border-radius:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:transparent;
+    flex-shrink:0;
+}
+
+.logo-box img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.logo-text strong{
+    display:block;
+    font-size:clamp(12px, 1.2vw + 8px, 15px);
+    letter-spacing:1px;
+    white-space:nowrap;
+}
+
+.logo-text span{
+    display:block;
+    color:#159eff;
+    font-size:clamp(8px, 0.6vw + 6px, 10px);
+    letter-spacing:2px;
+    margin-top:3px;
+    white-space:nowrap;
+}
+
+.desktop-menu{
+    display:flex;
+    gap:30px;
+}
+
+.desktop-menu a{
+    color:#91a8bf;
+    text-decoration:none;
+    transition:.25s;
+}
+
+.desktop-menu a:hover,
+.desktop-menu a.active{
+    color:#fff;
+    text-shadow:0 0 15px #009cff;
+}
+
+.menu-button{
+    width:clamp(44px, 6vw, 52px);
+    height:clamp(44px, 6vw, 52px);
+    border:1px solid #128edc;
+    border-radius:10px;
+    background:rgba(0,90,170,.08);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    cursor:pointer;
+    flex-shrink:0;
+}
+
+.menu-button span{
+    width:27px;
+    height:3px;
+    background:#12a4ff;
+    border-radius:5px;
+    transition:.3s;
+}
+
+.menu-button.active span:nth-child(1){
+    transform:translateY(9px) rotate(45deg);
+}
+
+.menu-button.active span:nth-child(2){
+    opacity:0;
+}
+
+.menu-button.active span:nth-child(3){
+    transform:translateY(-9px) rotate(-45deg);
+}
+
+/* MOBILE MENU */
+.mobile-menu{
+    display:none;
+    position:fixed;
+    z-index:100;
+    top:80px;
+    right:25px;
+    width:280px;
+    max-width:calc(100vw - 50px);
+    padding:12px;
+    border:1px solid #128edc;
+    border-radius:16px;
+    background:rgba(2,12,25,.96);
+    backdrop-filter:blur(20px);
+    box-shadow:0 20px 70px rgba(0,0,0,.6);
+}
+
+.mobile-menu.open{
+    display:block;
+}
+
+.mobile-menu a{
+    display:block;
+    padding:15px;
+    border-radius:10px;
+    color:#b5c9dc;
+    text-decoration:none;
+}
+
+.mobile-menu a:hover{
+    background:rgba(0,140,255,.12);
+    color:white;
+}
+
+/* SECTION TITLE (shared) */
+.section-title{
+    text-align:center;
+    margin-bottom:42px;
+}
+
+.section-title .line{
+    display:block;
+    width:55px;
+    height:2px;
+    margin:auto auto 15px;
+    background:#129cff;
+    box-shadow:0 0 15px #129cff;
+}
+
+.section-title small{
+    color:#4b8dbd;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.section-title h2{
+    font-size:clamp(26px, 4vw, 38px);
+    margin-top:6px;
+}
+
+/* PAGE HERO (small header for inner pages) */
+.page-hero{
+    width:min(1200px,calc(100% - 50px));
+    margin:20px auto 10px;
+    padding-top:20px;
+    text-align:center;
+}
+
+.small-title{
+    color:#63a5d2;
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:16px;
+}
+
+.small-title::before{
+    content:"";
+    display:inline-block;
+    width:35px;
+    height:2px;
+    background:#0d9cff;
+    margin-right:10px;
+    vertical-align:middle;
+}
+
+.page-hero h1{
+    font-size:clamp(32px,5vw,52px);
+    letter-spacing:-1.5px;
+}
+
+.page-hero h1 span{
+    color:transparent;
+    -webkit-text-stroke:1px #149eff;
+    text-shadow:0 0 30px rgba(0,150,255,.4);
+}
+
+/* DATE / DEADLINE BADGES (shared) */
+.date-badge-wrap{
+    width:min(1200px,calc(100% - 50px));
+    margin:26px auto 45px;
+    display:flex;
+    justify-content:center;
+}
+
+.date-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:16px;
+    padding:10px 26px 10px 10px;
+    border-radius:999px;
+
+    border:1px solid rgba(21,158,255,.4);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(60,20,110,.55),
+            rgba(6,14,30,.85)
+        );
+    box-shadow:
+        0 0 30px rgba(120,80,255,.14),
+        inset 0 0 20px rgba(21,158,255,.06);
+    backdrop-filter:blur(10px);
+}
+
+.date-badge-icon{
+    width:46px;
+    height:46px;
+    flex-shrink:0;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,#159eff,#7f5cff);
+    box-shadow:0 0 18px rgba(21,158,255,.45);
+}
+
+.date-badge-icon svg{
+    width:22px;
+    height:22px;
+}
+
+.date-badge-text small{
+    display:block;
+    color:#7fb0e0;
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.date-badge-text strong{
+    display:block;
+    margin-top:3px;
+    font-size:17px;
+    font-weight:700;
+    letter-spacing:.2px;
+    color:#fff;
+}
+
+/* ============================================================
+   SCHEDULE TIMELINE — ตารางกำหนดการไล่ลงมาตามเวลา
+   ============================================================ */
+
+.schedule{
+    width:min(900px,calc(100% - 50px));
+    margin:0 auto 110px;
+}
+
+.timeline{
+    position:relative;
+    padding-left:clamp(90px, 14vw, 130px);
+}
+
+/* เส้นเวลาแนวตั้ง */
+.timeline::before{
+    content:"";
+    position:absolute;
+    left:clamp(58px, 9vw, 82px);
+    top:8px;
+    bottom:8px;
+    width:2px;
+    background:linear-gradient(180deg,
+        rgba(21,158,255,.05),
+        rgba(21,158,255,.55) 8%,
+        rgba(127,92,255,.55) 92%,
+        rgba(127,92,255,.05));
+}
+
+.timeline-item{
+    position:relative;
+    margin-bottom:26px;
+}
+
+.timeline-item:last-child{
+    margin-bottom:0;
+}
+
+/* เวลา อยู่ซ้ายมือของเส้น */
+.timeline-time{
+    position:absolute;
+    left:calc(-1 * clamp(90px, 14vw, 130px));
+    top:22px;
+    width:clamp(74px, 11vw, 104px);
+    text-align:right;
+    padding-right:26px;
+
+    font-family:'Kanit', Arial, sans-serif;
+    font-weight:700;
+    font-size:clamp(13px, 1.6vw, 15px);
+    color:#7fc4ff;
+    letter-spacing:.3px;
+}
+
+.timeline-time small{
+    display:block;
+    margin-top:2px;
+    font-family:Arial,sans-serif;
+    font-weight:600;
+    font-size:9px;
+    letter-spacing:1.5px;
+    color:#4b7ea3;
+}
+
+/* จุดบนเส้นเวลา */
+.timeline-dot{
+    position:absolute;
+    left:calc(-1 * clamp(90px, 14vw, 130px) + clamp(58px, 9vw, 82px) - 7px);
+    top:26px;
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    background:#020812;
+    border:2px solid #159eff;
+    box-shadow:0 0 0 4px rgba(21,158,255,.12), 0 0 14px rgba(21,158,255,.5);
+    z-index:2;
+}
+
+.timeline-item.highlight .timeline-dot{
+    border-color:#ffc850;
+    box-shadow:0 0 0 4px rgba(255,196,80,.14), 0 0 16px rgba(255,196,80,.55);
+}
+
+/* การ์ดเนื้อหาแต่ละช่วงเวลา */
+.timeline-card{
+    position:relative;
+    padding:22px 26px;
+    border-radius:16px;
+    isolation:isolate;
+    overflow:hidden;
+
+    border:1px solid rgba(47,118,174,.32);
+    background:
+        linear-gradient(
+            160deg,
+            rgba(10,32,54,.7),
+            rgba(2,10,20,.88)
+        );
+    backdrop-filter:blur(10px);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .35s;
+}
+
+.timeline-card:hover{
+    transform:translateX(6px);
+    border-color:rgba(21,158,255,.5);
+    box-shadow:0 14px 34px rgba(0,110,255,.14);
+}
+
+.timeline-item.highlight .timeline-card{
+    border-color:rgba(255,196,80,.4);
+    background:
+        linear-gradient(
+            160deg,
+            rgba(54,38,10,.45),
+            rgba(10,20,32,.9)
+        );
+}
+
+.timeline-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:9.5px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    color:#7fc4ff;
+    padding:4px 12px;
+    border-radius:999px;
+    background:rgba(21,158,255,.12);
+    border:1px solid rgba(21,158,255,.3);
+    margin-bottom:10px;
+}
+
+.timeline-item.highlight .timeline-tag{
+    color:#ffd873;
+    background:rgba(255,196,80,.12);
+    border-color:rgba(255,196,80,.35);
+}
+
+.timeline-card h3{
+    font-family:'Kanit', Arial, sans-serif;
+    font-size:clamp(16px, 2vw, 19px);
+    font-weight:700;
+    letter-spacing:-.2px;
+}
+
+.timeline-card p{
+    margin-top:8px;
+    color:#8ca6bf;
+    font-size:13.5px;
+    line-height:1.75;
+}
+
+.timeline-card .place{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:12px;
+    font-size:11.5px;
+    color:#5c9bcf;
+    font-weight:600;
+    letter-spacing:.3px;
+}
+
+.timeline-card .place svg{
+    width:13px;
+    height:13px;
+    flex-shrink:0;
+}
+
+/* วันคั่น (Day divider) เผื่องานมีหลายวัน */
+.day-divider{
+    position:relative;
+    margin:0 0 30px calc(-1 * clamp(90px, 14vw, 130px));
+    padding:10px 22px;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+
+    border-radius:999px;
+    border:1px solid rgba(127,92,255,.4);
+    background:linear-gradient(135deg, rgba(60,20,110,.55), rgba(6,14,30,.85));
+    box-shadow:0 0 22px rgba(120,80,255,.14);
+
+    font-family:'Kanit', Arial, sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.3px;
+}
+
+.day-divider span{
+    color:#c9b8ff;
+}
+
+/* หมายเหตุท้ายตาราง */
+.schedule-note{
+    margin-top:40px;
+    padding:18px 24px;
+    border-radius:14px;
+    border:1px dashed rgba(21,158,255,.35);
+    background:rgba(21,158,255,.05);
+    color:#8ca6bf;
+    font-size:12.5px;
+    line-height:1.8;
+}
+
+.schedule-note strong{
+    color:#7fc4ff;
+}
+
+@media(max-width:600px){
+
+    .timeline{
+        padding-left:64px;
+    }
+
+    .timeline::before{
+        left:20px;
+    }
+
+    .timeline-time{
+        position:static;
+        width:auto;
+        text-align:left;
+        padding-right:0;
+        margin-bottom:8px;
+        padding-left:0;
+    }
+
+    .timeline-dot{
+        left:13px;
+        top:6px;
+    }
+
+    .day-divider{
+        margin-left:-64px;
+    }
+}
+
+/* LOCATION (shared style, reused) */
+.location{
+    width:min(1200px,calc(100% - 50px));
+    margin:auto;
+    padding-bottom:90px;
+}
+
+.location-box{
+    padding:clamp(35px, 5vw, 55px) clamp(16px, 3vw, 25px);
+    text-align:center;
+
+    border:1px solid #087dcc;
+    border-radius:20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,125,255,.12),
+            transparent 42%
+        ),
+        rgba(4,18,33,.8);
+
+    box-shadow:
+        inset 0 0 50px
+        rgba(0,130,255,.06);
+}
+
+.location small{
+    display:block;
+    margin-top:20px;
+    color:#4c91c0;
+    font-size:10px;
+    letter-spacing:2px;
+}
+
+.location h2{
+    font-size:clamp(29px, 4.5vw, 40px);
+    margin-top:5px;
+}
+
+.location-en{
+    color:#20aaff;
+    font-size:13px;
+    letter-spacing:2px;
+}
+
+.location-line{
+    width:65px;
+    height:2px;
+    margin:20px auto;
+    background:#159eff;
+}
+
+.location-note{
+    color:#708ca6;
+}
+
+/* FOOTER */
+footer{
+    width:min(1200px,calc(100% - 50px));
+    margin:auto;
+    padding:28px 0 40px;
+
+    border-top:1px solid rgba(28,145,255,.18);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    color:#63809c;
+}
+
+footer strong{
+    color:#b6d0e8;
+    font-size:12px;
+}
+
+footer p{
+    margin-top:5px;
+    font-size:12px;
+}
+
+footer a{
+    color:#23a8ff;
+    text-decoration:none;
+}
+
+@media(max-width:850px){
+
+    .desktop-menu{
+        display:none;
+    }
+
+}
+
+@media(max-width:520px){
+
+    .navbar,
+    .location,
+    footer{
+        width:calc(100% - 28px);
+    }
+
+    footer{
+        flex-direction:column;
+        gap:18px;
+        text-align:center;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-box">
+            <img src="logo.png" alt="Logo">
+        </div>
+
+        <div class="logo-text">
+            <strong>HP ROBOTICS</strong>
+            <span>COMPETITION</span>
+        </div>
+
+    </a>
+
+
+    <nav class="desktop-menu">
+
+        <a href="index.html">หน้าแรก</a>
+
+        <a href="competition.html">
+            รายการแข่งขัน
+        </a>
+
+        <a href="schedule.html" class="active">
+            กำหนดการ
+        </a>
+
+    </nav>
+
+
+    <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="เปิดเมนู"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+</header>
+
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+
+    <a href="index.html">
+        หน้าแรก
+    </a>
+
+    <a href="competition.html">
+        รายการแข่งขัน
+    </a>
+
+    <a href="invitation.html">
+        ใบเชิญ
+    </a>
+
+    <a href="schedule.html">
+        กำหนดการ
+    </a>
+
+</div>
+
+
+<!-- PAGE HERO -->
+<section class="page-hero" id="home">
+
+    <div class="small-title">
+        EVENT TIMETABLE
+    </div>
+
+    <h1>
+        กำหนดการ<span>แข่งขัน</span>
+    </h1>
+
+</section>
+
+
+<!-- DATE BADGE -->
+<div class="date-badge-wrap">
+
+    <div class="date-badge">
+
+        <div class="date-badge-icon">
+
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="5" width="18" height="16" rx="3" stroke="#fff" stroke-width="1.6"/>
+                <path d="M3 9.5H21" stroke="#fff" stroke-width="1.6"/>
+                <path d="M7.5 3V6.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M16.5 3V6.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+                <rect x="6.5" y="12" width="3" height="3" rx="0.6" fill="#fff"/>
+            </svg>
+
+        </div>
+
+        <div class="date-badge-text">
+
+            <small>
+                วันแข่งขัน
+            </small>
+
+            <strong>
+                1 – 2 สิงหาคม 2569
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SCHEDULE TIMELINE -->
+<section class="schedule">
+
+    <div class="section-title">
+        <span class="line"></span>
+    
+    </div>
+
+    <div class="timeline">
+
+        <div class="day-divider">
+            📅 <span>วันที่ 1 — 1 สิงหาคม 2569</span>
+        </div>
+
+        <!-- 13:00 -->
+        <div class="timeline-item">
+            <div class="timeline-time">13:00<small>น.</small></div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span class="timeline-tag">REGISTRATION</span>
+                <h3>ลงทะเบียนทีมเข้าแข่งขัน</h3>
+                <p>ทีมที่เข้าร่วมลงทะเบียน รับบัตรประจำทีม และตรวจสอบหุ่นยนต์เบื้องต้น (ตัวอย่างข้อความ)</p>
+                <div class="place">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.58 7-12A7 7 0 0 0 5 10c0 4.42 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    หอประชุมพันแจ่ม
+                </div>
+            </div>
+        </div>
+
+        <!-- 13:30 -->
+        <div class="timeline-item">
+            <div class="timeline-time">13:30<small>น.</small></div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span class="timeline-tag">OPENING</span>
+                <h3>พิธีเปิดการแข่งขัน</h3>
+                <p>กล่าวต้อนรับและเปิดงานอย่างเป็นทางการโดยผู้บริหารโรงเรียนหอพระ (ตัวอย่างข้อความ)</p>
+                <div class="place">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.58 7-12A7 7 0 0 0 5 10c0 4.42 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    หอประชุมพันแจ่ม
+                </div>
+            </div>
+        </div>
+
+        <!-- 14:00 -->
+        <div class="timeline-item">
+            <div class="timeline-time">14:00<small>น.</small></div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span class="timeline-tag">ROUND 1</span>
+                <h3>Racing Robot Challenge — รอบคัดเลือก</h3>
+                <p>แข่งขันหุ่นยนต์วิ่งตามเวลา แต่ละทีมแข่งตามคิวที่จับสลากไว้ (ตัวอย่างข้อความ)</p>
+                <div class="place">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.58 7-12A7 7 0 0 0 5 10c0 4.42 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    สนามแข่งขัน A
+                </div>
+            </div>
+        </div>
+
+        <!-- 15:00 -->
+        <div class="timeline-item">
+            <div class="timeline-time">15:00<small>น.</small></div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span class="timeline-tag">ROUND 1</span>
+                <h3>Recycling Mission Challenge — รอบคัดเลือก</h3>
+                <p>แข่งขันหุ่นยนต์คัดแยกและจัดเก็บวัตถุจำลองขยะรีไซเคิล (ตัวอย่างข้อความ)</p>
+                <div class="place">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.58 7-12A7 7 0 0 0 5 10c0 4.42 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    สนามแข่งขัน B
+                </div>
+            </div>
+        </div>
+
+        <!-- 16:00 -->
+        <div class="timeline-item">
+            <div class="timeline-time">16:00<small>น.</small></div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span class="timeline-tag">BREAK</span>
+                <h3>พักรับประทานอาหารว่าง</h3>
+                <p>ช่วงพักระหว่างรอบคัดเลือกและรอบชิงชนะเลิศ (ตัวอย่างข้อความ)</p>
+            </div>
+        </div>
+
+        <!-- 16:20 -->
+        <div class="timeline-item highlight">
+            <div class="timeline-time">16:20<small>น.</small></div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span class="timeline-tag">FINAL</span>
+                <h3>รอบชิงชนะเลิศ ทั้ง 2 รายการ</h3>
+                <p>ทีมที่ผ่านเข้ารอบแข่งขันชิงตำแหน่งชนะเลิศของแต่ละรายการ (ตัวอย่างข้อความ)</p>
+                <div class="place">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.58 7-12A7 7 0 0 0 5 10c0 4.42 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    หอประชุมพันแจ่ม
+                </div>
+            </div>
+        </div>
+
+        <!-- 17:00 -->
+        <div class="timeline-item">
+            <div class="timeline-time">17:00<small>น.</small></div>
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span class="timeline-tag">AWARDS</span>
+                <h3>พิธีมอบรางวัลและปิดงาน</h3>
+                <p>ประกาศผลและมอบรางวัลให้ทีมชนะเลิศ รองชนะเลิศอันดับ 1 และ 2 (ตัวอย่างข้อความ)</p>
+                <div class="place">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.58 7-12A7 7 0 0 0 5 10c0 4.42 7 12 7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    หอประชุมพันแจ่ม
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="schedule-note">
+        <strong>หมายเหตุ:</strong> กำหนดการนี้เป็นเพียงตัวอย่าง อาจมีการเปลี่ยนแปลงเวลาและรายละเอียดตามความเหมาะสม
+        กรุณาติดตามประกาศอย่างเป็นทางการก่อนวันแข่งขันอีกครั้ง
+    </div>
+
+</section>
+
+
+<!-- LOCATION -->
+<section class="location">
+
+    <div class="location-box">
+
+        <small>
+            EVENT LOCATION
+        </small>
+
+        <h2>
+            ณ โรงเรียนหอพระ
+        </h2>
+
+        <div class="location-en">
+            HORPHRA SCHOOL
+        </div>
+
+        <div class="location-line"></div>
+
+        <p class="location-note">
+            หอประชุม พันแจ่ม จังหวัดเชียงใหม่ 
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div>
+
+        <strong>
+            HP ROBOTICS COMPETITION
+        </strong>
+
+        <p>
+            © 2026 Horpra School.
+            All rights reserved.
+        </p>
+
+    </div>
+
+    <a href="#home">
+        กลับด้านบน ↑
+    </a>
+
+</footer>
+
+
+<script>
+
+const menuButton =
+    document.getElementById("menuButton");
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+
+menuButton.addEventListener(
+    "click",
+    function(){
+
+        mobileMenu.classList.toggle("open");
+
+        menuButton.classList.toggle("active");
+
+    }
+);
+
+
+document
+    .querySelectorAll(".mobile-menu a")
+    .forEach(function(link){
+
+        link.addEventListener(
+            "click",
+            function(){
+
+                mobileMenu.classList.remove("open");
+
+                menuButton.classList.remove("active");
+
+            }
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
