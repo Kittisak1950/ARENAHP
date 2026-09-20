@@ -501,6 +501,54 @@ footer a{ color:#23a8ff; text-decoration:none; }
     line-height:1.6;
 }
 
+/* ===== QR CODE FRAME (กรอบรูป QR บัญชี) ===== */
+.payment-qr-row{
+    text-align:center;
+}
+
+.qr-frame{
+    width:min(220px,100%);
+    aspect-ratio:1/1;
+    margin:12px auto 0;
+    padding:10px;
+    border-radius:18px;
+    border:3px solid transparent;
+    /* พื้นขาวให้แสกน QR ง่าย + ขอบไล่สีเหมือนกรอบ payment-info */
+    background:
+        linear-gradient(#fff,#fff) padding-box,
+        linear-gradient(120deg,#159eff,#7f5cff) border-box;
+    box-shadow:0 0 26px rgba(21,158,255,.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.qr-frame img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+}
+
+/* แสดงตอนยังไม่มีไฟล์รูป (ใส่ qr.png แล้วจะหายไปเอง) */
+.qr-placeholder{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    text-align:center;
+    color:#5f7f9e;
+    font-size:12px;
+    font-weight:600;
+}
+
+.qr-placeholder svg{
+    width:34px;
+    height:34px;
+}
+
 @media(max-width:600px){
     .payment-info-grid{
         grid-template-columns:1fr;
@@ -1124,17 +1172,37 @@ footer a{ color:#23a8ff; text-decoration:none; }
 
                         <div class="payment-info-row">
                             <span class="label">ธนาคาร</span>
-                            <span class="value">ธนาคารกสิกรไทย (KBank)</span>
+                            <span class="value">ธนาคารกรุงไทย (Krungthai)</span>
                         </div>
 
                         <div class="payment-info-row">
                             <span class="label">ชื่อบัญชี</span>
-                            <span class="value">โรงเรียนหอพระ</span>
+                            <span class="value">นางนภาพร ไชยสมภาร</span>
                         </div>
 
                         <div class="payment-info-row full">
                             <span class="label">เลขที่บัญชี</span>
-                            <span class="value account-number">123-4-56789-0</span>
+                            <span class="value account-number">538-0-08569-5</span>
+                        </div>
+
+                        <!-- QR CODE — วางรูป QR บัญชีที่ qr.png (โฟลเดอร์เดียวกับหน้านี้) -->
+                        <div class="payment-info-row full payment-qr-row">
+                            <span class="label">สแกน QR Code เพื่อโอนเงิน</span>
+
+                            <div class="qr-frame">
+                                <img src="qr.jpg" alt="QR Code บัญชีโอนเงิน"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+                                <div class="qr-placeholder">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="7" height="7" rx="1"/>
+                                        <rect x="14" y="3" width="7" height="7" rx="1"/>
+                                        <rect x="3" y="14" width="7" height="7" rx="1"/>
+                                        <path d="M14 14h3v3h-3zM20 14v.01M14 20h3M20 17v4"/>
+                                    </svg>
+                                    พื้นที่ใส่รูป QR Code
+                                </div>
+                            </div>
                         </div>
 
                     </div>
