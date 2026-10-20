@@ -1320,7 +1320,10 @@ footer a{
 }
 
 .about-card-media .ring.two{
-  
+    width:56%;
+    height:56%;
+    border-style:dashed;
+    animation:rotate 25s linear infinite;
 }
 
 .about-card-media img{
@@ -2027,6 +2030,180 @@ footer a{
     }
 }
 
+
+/* ============================================================
+   POLISH — ABOUT + NOTICE + COUNTDOWN CAPTION
+   ============================================================ */
+.nw{ white-space:nowrap; }
+
+.countdown-caption{
+    flex-basis:100%;
+    text-align:center;
+    margin-bottom:6px;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:2px;
+    color:#7fb0e0;
+}
+
+/* ABOUT — วงแหวนเป็นวงกลมจริง + แสงใต้หุ่นยนต์ */
+.about-card-media .ring.one{
+    width:min(78%,380px);
+    height:auto;
+    aspect-ratio:1/1;
+}
+.about-card-media .ring.two{
+    width:min(56%,270px);
+    height:auto;
+    aspect-ratio:1/1;
+    border-style:dashed;
+    animation:rotate 30s linear infinite;
+}
+.about-card-media::after{
+    content:"";
+    position:absolute;
+    bottom:13%;
+    left:50%;
+    width:60%;
+    height:26px;
+    transform:translateX(-50%);
+    background:radial-gradient(ellipse,rgba(21,158,255,.5),transparent 70%);
+    filter:blur(10px);
+    pointer-events:none;
+    z-index:1;
+}
+.about-card-content{ padding:44px 48px; }
+.about-card-content p{ font-size:15px; line-height:1.95; }
+.about-card-content p:first-of-type{ color:#d6e4f3; font-size:15.5px; }
+
+.about-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:22px;
+}
+.about-chip{
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:11.5px;
+    font-weight:600;
+    color:#9fd3ff;
+    background:rgba(21,158,255,.08);
+    border:1px solid rgba(21,158,255,.28);
+}
+
+.about-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:26px;
+    padding-top:26px;
+    border-top:1px solid rgba(255,255,255,.07);
+}
+.about-stat{
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:4px;
+    padding:16px 18px;
+    min-width:0;
+}
+.about-stat strong{ order:1; font-size:24px; text-align:left; line-height:1.15; }
+.about-stat span{ order:2; font-size:11.5px; font-weight:500; color:#8ca6bf; }
+
+/* NOTICE — ประกาศสำคัญ */
+.announcement-box.notice{
+    align-items:flex-start;
+    gap:22px;
+    padding:30px 34px;
+}
+.announcement-box.notice .announcement-icon{ margin-top:2px; }
+.announcement-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+}
+.announcement-tag::before{
+    content:"";
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#ff6b6b;
+    box-shadow:0 0 10px #ff4d4d;
+    animation:liveDotPulse 1.6s ease-in-out infinite;
+}
+@keyframes liveDotPulse{ 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.4;transform:scale(.7);} }
+.notice-title{
+    font-family:'Kanit',Arial,sans-serif;
+    font-size:clamp(17px,2.2vw,21px);
+    font-weight:700;
+    line-height:1.4;
+    color:#fff;
+}
+.notice-list{
+    list-style:none;
+    margin-top:14px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.notice-list li{
+    position:relative;
+    padding-left:20px;
+    color:#f0c9c9;
+    font-size:13.5px;
+    line-height:1.75;
+}
+.notice-list li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:.72em;
+    width:7px;
+    height:7px;
+    border-radius:2px;
+    background:linear-gradient(135deg,#ff6b6b,#b3001b);
+}
+.notice-badge{
+    flex-shrink:0;
+    align-self:center;
+    min-width:112px;
+    padding:16px 14px;
+    text-align:center;
+    border-radius:18px;
+    background:rgba(255,70,70,.1);
+    border:1px solid rgba(255,100,100,.35);
+}
+.notice-badge strong{
+    display:block;
+    font-family:'Kanit',Arial,sans-serif;
+    font-size:38px;
+    font-weight:800;
+    line-height:1;
+    background:linear-gradient(135deg,#ffb3b3,#ff5c5c);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+.notice-badge span{ display:block; margin-top:4px; font-size:13px; font-weight:700; color:#ffd0d0; }
+.notice-badge small{ display:block; margin-top:2px; font-size:10px; letter-spacing:1px; color:#d49a9a; }
+
+@media(max-width:850px){
+    .about-card-content{ padding:30px 26px 32px; }
+}
+@media(max-width:700px){
+    .announcement-box.notice{ flex-direction:column; align-items:stretch; text-align:left; padding:26px 22px; }
+    .notice-badge{ align-self:flex-start; display:flex; align-items:baseline; gap:8px; padding:10px 16px; text-align:left; }
+    .notice-badge strong{ font-size:26px; }
+    .notice-badge span,.notice-badge small{ margin-top:0; }
+}
+@media(max-width:520px){
+    .about-stats{ gap:8px; }
+    .about-stat{ padding:12px 10px; }
+    .about-stat strong{ font-size:18px; }
+    .about-stat span{ font-size:10.5px; }
+}
+
 </style>
 </head>
 
@@ -2196,28 +2373,27 @@ footer a{
         <div class="about-card-content">
 
             <p>
-                HP Robotics Competition ครั้งที่1 คือเวทีการแข่งขันหุ่นยนต์ที่จัดขึ้นโดยโรงเรียนหอพระ จังหวัดเชียงใหม่
-                เปิดโอกาสให้นักเรียนได้แสดงความสามารถด้านการออกแบบ เขียนโปรแกรม และควบคุมหุ่นยนต์
+                HP Robotics Competition ครั้งที่ 1 คือเวทีการแข่งขัน<span class="nw">หุ่นยนต์</span>ที่จัดขึ้นโดยโรงเรียนหอพระ จังหวัดเชียงใหม่
+                เปิดโอกาสให้นักเรียนได้แสดงความสามารถด้านการออกแบบ เขียนโปรแกรม และควบคุม<span class="nw">หุ่นยนต์</span>
                 ผ่านโจทย์การแข่งขัน 2 รูปแบบที่ท้าทายทั้งความเร็วและความแม่นยำ
             </p>
 
             <p>
                 งานนี้มุ่งส่งเสริมให้นักเรียนได้เรียนรู้กระบวนการคิดเชิงวิศวกรรม การแก้ปัญหาเฉพาะหน้า
-                และการทำงานเป็นทีม เปิดกว้างสำหรับทุกโรงเรียนที่สนใจเข้าร่วม 
+                และการทำงานเป็นทีม เปิดกว้างสำหรับทุกโรงเรียนที่สนใจเข้าร่วม
             </p>
 
+            <div class="about-chips">
+                <span class="about-chip">ออกแบบ</span>
+                <span class="about-chip">เขียนโปรแกรม</span>
+                <span class="about-chip">ควบคุมหุ่นยนต์</span>
+                <span class="about-chip">ทำงานเป็นทีม</span>
+            </div>
+
             <div class="about-stats">
-
-                <div class="about-stat">
-                    <span>รายการแข่งขัน</span>
-                    <strong>2</strong>
-                </div>
-
-                <div class="about-stat">
-                    <span>อายุไม่เกิน</span>
-                    <strong>14 ปี</strong>
-                </div>
-
+                <div class="about-stat"><strong>2</strong><span>รายการแข่งขัน</span></div>
+                <div class="about-stat"><strong>14 ปี</strong><span>อายุไม่เกิน</span></div>
+                <div class="about-stat"><strong>13 พ.ย.</strong><span>วันแข่งขัน</span></div>
             </div>
 
         </div>
@@ -2230,7 +2406,7 @@ footer a{
 <!-- ANNOUNCEMENT -->
 <section class="announcement">
 
-    <div class="announcement-box">
+    <div class="announcement-box notice">
 
         <div class="announcement-icon">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2241,11 +2417,17 @@ footer a{
 
         <div class="announcement-text">
             <span class="announcement-tag">ประกาศสำคัญ</span>
-            <strong>กรุณาอ่านรายระเอียดกติกาแล้วการสมัครให้ครบถ้วนก่อนตัดสินใจ
-                หากสมัครแล้วรายชื่อทีมไม่ขึ้นในจำนวนผู้เข้าสมัครทันทีเพราะทีมงานจะตรวจสอบข้อมูลภายใน 24 ชั่วโมง หากภายใน 24 ชั่วโมงรายชื่อของท่านยังไม่ขึ้นในจำนวนผู้สมัครแปลว่าข้อมูลไม่ครบหรือมีปัญหาโปรดสมัครอีกครั้ง</strong>
-            <p>
-                
-            </p>
+            <h3 class="notice-title">อ่านรายละเอียดกติกาและการสมัครให้ครบถ้วนก่อนตัดสินใจ</h3>
+            <ul class="notice-list">
+                <li>หลังสมัคร รายชื่อทีมจะยังไม่ขึ้นในจำนวนผู้เข้าสมัครทันที เพราะทีมงานจะตรวจสอบข้อมูลภายใน 24 ชั่วโมง</li>
+                <li>หากเกิน 24 ชั่วโมงแล้วรายชื่อยังไม่ขึ้น แปลว่าข้อมูลไม่ครบหรือมีปัญหา โปรดสมัครอีกครั้ง</li>
+            </ul>
+        </div>
+
+        <div class="notice-badge">
+            <strong>24</strong>
+            <span>ชั่วโมง</span>
+            <small>ตรวจสอบข้อมูล</small>
         </div>
 
     </div>
@@ -2309,6 +2491,8 @@ footer a{
 
 <!-- COUNTDOWN -->
 <div class="countdown-wrap" id="countdownWrap">
+
+    <div class="countdown-caption">นับถอยหลังสู่วันแข่งขัน 13 พฤศจิกายน 2569</div>
 
     <div class="countdown-box">
         <span class="countdown-value" id="cdDays">00</span>
@@ -2816,10 +3000,10 @@ document.addEventListener("keydown", function(e){
 });
 
 
-/* COUNTDOWN — นับถอยหลังถึงวันปิดรับสมัคร 1 พฤศจิกายน 2569 (23:59:59 เวลาไทย) */
+/* COUNTDOWN — นับถอยหลังถึงวันแข่งขัน 13 พฤศจิกายน 2569 (00:00:00 เวลาไทย) */
 
 const countdownTarget =
-    new Date("2026-11-01T23:59:59+07:00").getTime();
+    new Date("2026-11-13T00:00:00+07:00").getTime();
 
 const countdownWrap =
     document.getElementById("countdownWrap");
@@ -2835,7 +3019,7 @@ function updateCountdown(){
     if(diff <= 0){
 
         countdownWrap.innerHTML =
-            '<div class="countdown-ended">ปิดรับสมัครแล้ว</div>';
+            '<div class="countdown-ended">ถึงวันแข่งขันแล้ว!</div>';
 
         clearInterval(countdownInterval);
 
