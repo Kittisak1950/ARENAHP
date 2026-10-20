@@ -2204,6 +2204,102 @@ footer a{
     .about-stat span{ font-size:10.5px; }
 }
 
+
+/* ============================================================
+   ROBOT SHOWCASE — พื้นที่แสดงหุ่นยนต์แบบ HUD / โชว์รูม
+   ============================================================ */
+.about-card-media{
+    background:
+        radial-gradient(circle at 50% 42%, rgba(21,158,255,.30), transparent 58%),
+        linear-gradient(180deg, rgba(4,14,30,.1), rgba(2,8,17,.85));
+    box-shadow:inset 0 0 90px rgba(0,0,0,.5);
+}
+.media-floor{
+    position:absolute;
+    left:-15%;
+    right:-15%;
+    bottom:-8%;
+    height:52%;
+    z-index:0;
+    background-image:
+        linear-gradient(rgba(21,158,255,.38) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21,158,255,.38) 1px, transparent 1px);
+    background-size:44px 44px;
+    transform:perspective(320px) rotateX(62deg);
+    transform-origin:50% 100%;
+    -webkit-mask-image:radial-gradient(ellipse at 50% 100%, #000 12%, transparent 68%);
+    mask-image:radial-gradient(ellipse at 50% 100%, #000 12%, transparent 68%);
+    opacity:.6;
+    pointer-events:none;
+}
+.about-card-media .ring.three{
+    width:min(67%,325px);
+    height:auto;
+    aspect-ratio:1/1;
+    border:none;
+    background:conic-gradient(from 0deg, transparent 0 68%, rgba(80,196,255,.9) 100%);
+    -webkit-mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+    mask:radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+    filter:drop-shadow(0 0 6px rgba(80,196,255,.8));
+    animation:rotate 6s linear infinite;
+}
+.about-card-media img{
+    filter:drop-shadow(0 24px 30px rgba(0,0,0,.6)) drop-shadow(0 0 22px rgba(21,158,255,.35));
+    animation:mediaFloat 5s ease-in-out infinite;
+}
+.about-card-media::after{
+    bottom:12%;
+    width:54%;
+    height:30px;
+    background:radial-gradient(ellipse, rgba(21,158,255,.65), transparent 70%);
+    filter:blur(14px);
+    animation:mediaShadow 5s ease-in-out infinite;
+}
+@keyframes mediaFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-10px); } }
+@keyframes mediaShadow{
+    0%,100%{ transform:translateX(-50%) scale(1); opacity:.95; }
+    50%{ transform:translateX(-50%) scale(.84); opacity:.55; }
+}
+.media-hud{
+    position:absolute;
+    left:22px;
+    bottom:20px;
+    z-index:4;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+.media-hud strong{
+    font-family:'Kanit',Arial,sans-serif;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    color:#fff;
+}
+.media-hud span{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:9.5px;
+    font-weight:700;
+    letter-spacing:1.8px;
+    color:#7fe4bd;
+}
+.media-hud span::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#50e6a8;
+    box-shadow:0 0 8px #50e6a8;
+    animation:liveDotPulse 1.6s ease-in-out infinite;
+}
+@media(prefers-reduced-motion:reduce){
+    .about-card-media img,
+    .about-card-media::after,
+    .about-card-media .ring.three{ animation:none; }
+}
+
 </style>
 </head>
 
@@ -2358,15 +2454,23 @@ footer a{
 
         <div class="about-card-media">
 
+            <div class="media-floor"></div>
+
             <span class="frame-tag">ROBOT SHOWCASE</span>
 
             <div class="ring one"></div>
+            <div class="ring three"></div>
             <div class="ring two"></div>
 
             <span class="frame-corner tl"></span>
             <span class="frame-corner br"></span>
 
             <img src="robott.png" alt="หุ่นยนต์ตัวอย่าง HP Robotics Competition">
+
+            <div class="media-hud">
+                <strong>MODEL · HP7</strong>
+                <span>SYSTEM ONLINE</span>
+            </div>
 
         </div>
 
